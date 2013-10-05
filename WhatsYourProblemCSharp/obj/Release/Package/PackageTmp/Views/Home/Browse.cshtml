@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Browse";
+}
+<style>
+    /*Problem stuff*/
+    .problemContainer {
+        min-width: 70%;
+        float: left;
+        clear: left;
+        margin-left: 2.5%;
+    }
+
+    .problem {
+        float: left;
+        clear: left;
+        margin-bottom: 1%;
+        width: 100%;
+    }
+    .selectedProblem > .pTitle{
+        font-weight:bold;
+    }
+
+    .voteArrowsContainer {
+        float: left;
+        clear: left;
+        margin-right: 0.5%;
+    }
+
+        .voteArrowsContainer > img {
+            cursor: pointer;
+        }
+
+    .voteUpArrow {
+        float: left;
+        clear: left;
+        height: 25px;
+        width: 25px;
+        background-color: #ccc;
+    }
+
+    .voteDownArrow {
+        float: left;
+        clear: left;
+        height: 25px;
+        width: 25px;
+        background-color: #ccc;
+    }
+
+    .pTitle {
+        float: left;
+        width: 90%;
+        cursor:pointer;
+    }
+
+    .pOptions {
+        float: left;
+        width: 90%;
+        font-size: 0.8em;
+    }
+
+        .pOptions > div {
+            float: left;
+            margin-right: 0.5%;
+        }
+    /*Comment stuff*/
+    .commentContainer {
+        float: right;
+        clear: right;
+        max-width: 20%;
+    }
+    .pContentHolder {
+        float: left;
+        position: relative;
+        width: 90%;
+        border: solid 1px #ccc;
+        margin-top: 1%;
+    }
+    .pContent {
+        float: left;
+        width: 98%;
+        padding: 1%;
+        min-height: 20px;
+    }
+
+    .pContentControls {
+        position: absolute;
+        top: 5px;
+        right: 11px;
+        font-size: 0.8em;
+        cursor: pointer;
+    }
+
+        .pContentControls:hover {
+            text-decoration: underline;
+        }
+
+
+        .showContent:hover {
+            text-decoration: underline;
+        }
+</style>
+<script>
+    $(document).on('click', '.pTitle', function (e) {
+
+        var $this = $(this);
+        var $problem = $this.closest('.problem');
+        var wasSelected = $problem.hasClass('selectedProblem');
+        $('.problem').removeClass('selectedProblem');
+
+
+        if (!wasSelected) {
+            $problem.addClass('selectedProblem');
+        }
+
+        var $pContentHolder = $problem.find('.pContentHolder');
+        $pContentHolder.slideToggle();
+
+    });
+
+    /*
+    on change selected Problem
+    
+        */
+    $(document).on('click', '.edit', function (e) {
+        var $this = $(this);
+        var $pContent = $this.closest('.problem').find('.pContent');
+        $pContent.attr('contenteditable') == 'true' ? $pContent.attr('contenteditable', 'false') : $pContent.attr('contenteditable', 'true');
+        $this.text() == 'edit' ? $this.text('done') : $this.text('edit');
+    })
+</script>
+<div class="problemContainer">
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="problem">
+            <div class="voteArrowsContainer">
+                <img class="voteUpArrow" />
+                <img class="voteDownArrow" />
+            </div>
+            <div class="pTitle">
+                Can we develop new types of Chemistry at aqueous / solid interfaces, stimulated by a laser?
+            </div>
+            <div class="pOptions">
+                <div>@DateTime.UtcNow.AddHours(12).ToShortDateString()</div>
+                <div>Jake Martin</div>
+            </div>
+            <div class="pContentHolder" style="display:none;">
+                <div class="pContentControls">
+                    <span class="edit">edit</span>
+                </div>
+                <div class="pContent" contenteditable="false">
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="commentContainer">
+    <div class="comment notUser">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+    <div class="comment user">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+    <div class="comment notUser">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+    <div class="comment notUser">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+    <div class="comment notUser">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+    <div class="comment user">
+        <div class="colourBar"></div>
+        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
+        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
+    </div>
+</div>

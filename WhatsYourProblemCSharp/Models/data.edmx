@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PhotonFactoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChatComments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PUserID" Type="uniqueidentifier" />
+          <Property Name="ProblemID" Type="uniqueidentifier" />
+          <Property Name="Content" Type="nvarchar" MaxLength="1000" />
+          <Property Name="PostedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Problem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+          <Property Name="PostedDate" Type="datetime2" Precision="7" />
+          <Property Name="PUserID" Type="uniqueidentifier" />
+          <Property Name="Rating" Type="int" />
+        </EntityType>
+        <EntityType Name="PUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="NameFirst" Type="nvarchar" MaxLength="100" />
+          <Property Name="NameLast" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastActivityDate" Type="datetime2" Precision="7" />
+          <Property Name="EmailCode" Type="uniqueidentifier" />
+          <Property Name="Created" Type="datetime2" Precision="7" />
+          <Property Name="EmailVerified" Type="bit" />
+          <Property Name="FailedPasswordCount" Type="int" />
+        </EntityType>
+        <Association Name="FK__ChatComme__Probl__164452B1">
+          <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
+          <End Role="ChatComments" Type="Self.ChatComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChatComments">
+              <PropertyRef Name="ProblemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChatComme__PUser__15502E78">
+          <End Role="PUser" Type="Self.PUser" Multiplicity="0..1" />
+          <End Role="ChatComments" Type="Self.ChatComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChatComments">
+              <PropertyRef Name="PUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Problem__PUserID__1273C1CD">
+          <End Role="PUser" Type="Self.PUser" Multiplicity="0..1" />
+          <End Role="Problem" Type="Self.Problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Problem">
+              <PropertyRef Name="PUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhotonFactoryModelStoreContainer">
+          <EntitySet Name="ChatComments" EntityType="Self.ChatComments" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Problem" EntityType="Self.Problem" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PUser" EntityType="Self.PUser" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <AssociationSet Name="FK__ChatComme__Probl__164452B1" Association="Self.FK__ChatComme__Probl__164452B1">
+            <End Role="Problem" EntitySet="Problem" />
+            <End Role="ChatComments" EntitySet="ChatComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChatComme__PUser__15502E78" Association="Self.FK__ChatComme__PUser__15502E78">
+            <End Role="PUser" EntitySet="PUser" />
+            <End Role="ChatComments" EntitySet="ChatComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Problem__PUserID__1273C1CD" Association="Self.FK__Problem__PUserID__1273C1CD">
+            <End Role="PUser" EntitySet="PUser" />
+            <End Role="Problem" EntitySet="Problem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhotonFactoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PhotonFactoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChatComments" EntityType="PhotonFactoryModel.ChatComment" />
+          <EntitySet Name="Problems" EntityType="PhotonFactoryModel.Problem" />
+          <EntitySet Name="PUsers" EntityType="PhotonFactoryModel.PUser" />
+          <AssociationSet Name="FK__ChatComme__Probl__164452B1" Association="PhotonFactoryModel.FK__ChatComme__Probl__164452B1">
+            <End Role="Problem" EntitySet="Problems" />
+            <End Role="ChatComment" EntitySet="ChatComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChatComme__PUser__15502E78" Association="PhotonFactoryModel.FK__ChatComme__PUser__15502E78">
+            <End Role="PUser" EntitySet="PUsers" />
+            <End Role="ChatComment" EntitySet="ChatComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Problem__PUserID__1273C1CD" Association="PhotonFactoryModel.FK__Problem__PUserID__1273C1CD">
+            <End Role="PUser" EntitySet="PUsers" />
+            <End Role="Problem" EntitySet="Problems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ChatComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="PUserID" Type="Guid" />
+          <Property Name="ProblemID" Type="Guid" />
+          <Property Name="Content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="PostedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Problem" Relationship="PhotonFactoryModel.FK__ChatComme__Probl__164452B1" FromRole="ChatComment" ToRole="Problem" />
+          <NavigationProperty Name="PUser" Relationship="PhotonFactoryModel.FK__ChatComme__PUser__15502E78" FromRole="ChatComment" ToRole="PUser" />
+        </EntityType>
+        <EntityType Name="Problem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="PostedDate" Type="DateTime" Precision="7" />
+          <Property Name="PUserID" Type="Guid" />
+          <Property Name="Rating" Type="Int32" />
+          <NavigationProperty Name="ChatComments" Relationship="PhotonFactoryModel.FK__ChatComme__Probl__164452B1" FromRole="Problem" ToRole="ChatComment" />
+          <NavigationProperty Name="PUser" Relationship="PhotonFactoryModel.FK__Problem__PUserID__1273C1CD" FromRole="Problem" ToRole="PUser" />
+        </EntityType>
+        <EntityType Name="PUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameFirst" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameLast" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastActivityDate" Type="DateTime" Precision="7" />
+          <Property Name="EmailCode" Type="Guid" />
+          <Property Name="Created" Type="DateTime" Precision="7" />
+          <Property Name="EmailVerified" Type="Boolean" />
+          <Property Name="FailedPasswordCount" Type="Int32" />
+          <NavigationProperty Name="ChatComments" Relationship="PhotonFactoryModel.FK__ChatComme__PUser__15502E78" FromRole="PUser" ToRole="ChatComment" />
+          <NavigationProperty Name="Problems" Relationship="PhotonFactoryModel.FK__Problem__PUserID__1273C1CD" FromRole="PUser" ToRole="Problem" />
+        </EntityType>
+        <Association Name="FK__ChatComme__Probl__164452B1">
+          <End Type="PhotonFactoryModel.Problem" Role="Problem" Multiplicity="0..1" />
+          <End Type="PhotonFactoryModel.ChatComment" Role="ChatComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChatComment">
+              <PropertyRef Name="ProblemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChatComme__PUser__15502E78">
+          <End Type="PhotonFactoryModel.PUser" Role="PUser" Multiplicity="0..1" />
+          <End Type="PhotonFactoryModel.ChatComment" Role="ChatComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChatComment">
+              <PropertyRef Name="PUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Problem__PUserID__1273C1CD">
+          <End Type="PhotonFactoryModel.PUser" Role="PUser" Multiplicity="0..1" />
+          <End Type="PhotonFactoryModel.Problem" Role="Problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Problem">
+              <PropertyRef Name="PUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhotonFactoryModelStoreContainer" CdmEntityContainer="PhotonFactoryEntities">
+          <EntitySetMapping Name="ChatComments">
+            <EntityTypeMapping TypeName="PhotonFactoryModel.ChatComment">
+              <MappingFragment StoreEntitySet="ChatComments">
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ProblemID" ColumnName="ProblemID" />
+                <ScalarProperty Name="PUserID" ColumnName="PUserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Problems">
+            <EntityTypeMapping TypeName="PhotonFactoryModel.Problem">
+              <MappingFragment StoreEntitySet="Problem">
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="PUserID" ColumnName="PUserID" />
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUsers">
+            <EntityTypeMapping TypeName="PhotonFactoryModel.PUser">
+              <MappingFragment StoreEntitySet="PUser">
+                <ScalarProperty Name="FailedPasswordCount" ColumnName="FailedPasswordCount" />
+                <ScalarProperty Name="EmailVerified" ColumnName="EmailVerified" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="EmailCode" ColumnName="EmailCode" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="NameLast" ColumnName="NameLast" />
+                <ScalarProperty Name="NameFirst" ColumnName="NameFirst" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
