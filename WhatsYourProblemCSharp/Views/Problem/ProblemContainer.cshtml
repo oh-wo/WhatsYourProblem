@@ -1,0 +1,21 @@
+﻿@using WhatsYourProblemCSharp.Models;
+@model List<Problem>
+@foreach (Problem problem in Model)
+{
+    <div class="problem">
+        <div class="voteArrowsContainer">
+            <img class="voteUpArrow" />
+            <img class="voteDownArrow" />
+        </div>
+        <div class="pTitle">@problem.Title</div>
+        <div class="pOptions">
+            <div>@problem.PostedDate.Value.AddHours(12).ToShortDateString()</div>
+            <div>@problem.PUser.NameFirst</div>
+            <div class="pContentHolder" style="display:none;">
+                <div class="pContentControls">
+                    <span class="edit">edit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -212,6 +212,8 @@
     .showContent:hover {
         text-decoration: underline;
     }
+
+    
 </style>
 <script>
     $('body').css('height', $(window).height() + 'px');
@@ -230,18 +232,12 @@
         var $pContentHolder = $problem.find('.pContentHolder');
 
     });
-
-    /*
-    on change selected Problem
-
-        */
     $(document).on('click', '.edit', function (e) {
         var $this = $(this);
         var $pContent = $this.closest('.problem').find('.pContent');
         $pContent.attr('contenteditable') == 'true' ? $pContent.attr('contenteditable', 'false') : $pContent.attr('contenteditable', 'true');
         $this.text() == 'edit' ? $this.text('done') : $this.text('edit');
     })
-
     //LOG OFF
     $(document).on('click', '.logoff', function (e) {
         $('.logoff').attr('disabled', 'disabled').text('logging off...');
@@ -264,6 +260,11 @@
             },
 
         });
+    });
+    
+    $(document).on('click', '.submitProblem', function (e) {
+        $('.submitProblem-container').fadeIn(100);
+        $('.submitProblem-cover').fadeIn(100);
     });
 </script>
 <script src="/Scripts/jquery.signalR-1.1.3.min.js"></script>
@@ -289,33 +290,14 @@
 <div class="accountStuff">
     <div class="hiUser">Hi @Model.NameFirst</div>
     <div class="logoff">log off</div>
+    
 </div>
 <div class="submitProblem">
     Submit a new problem
 </div>
 
 <div class="problemContainer">
-    @for (int i = 0; i < 6; i++)
-    {
-    <div class="problem">
-        <div class="voteArrowsContainer">
-            <img class="voteUpArrow" />
-            <img class="voteDownArrow" />
-        </div>
-        <div class="pTitle">
-            Can we develop new types of Chemistry at aqueous / solid interfaces, stimulated by a laser?
-        </div>
-        <div class="pOptions">
-            <div>@DateTime.UtcNow.AddHours(12).ToShortDateString()</div>
-            <div>Jake Martin</div>
-        </div>
-        <div class="pContentHolder" style="display:none;">
-            <div class="pContentControls">
-                <span class="edit">edit</span>
-            </div>
-        </div>
-    </div>
-    }
+    @Html.Action("ProblemContainer", "Problem")
 </div>
 <div class="commentContainer">
     <div class="comment notUser">
@@ -350,7 +332,4 @@
     </div>
     <div></div>
 </div>
-<div class="commentSubmitContainer">
-    <textarea></textarea>
-    <input type="button" value="send" />
-</div>
+@Html.Action("Submit", "Problem")
