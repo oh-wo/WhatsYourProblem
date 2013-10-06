@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PhotonFactoryModelStoreContainer" CdmEntityContainer="PhotonFactoryEntities">
+    <EntitySetMapping Name="ChatComments">
+      <EntityTypeMapping TypeName="PhotonFactoryModel.ChatComment">
+        <MappingFragment StoreEntitySet="ChatComments">
+          <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ProblemID" ColumnName="ProblemID" />
+          <ScalarProperty Name="PUserID" ColumnName="PUserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Problems">
+      <EntityTypeMapping TypeName="PhotonFactoryModel.Problem">
+        <MappingFragment StoreEntitySet="Problem">
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="PUserID" ColumnName="PUserID" />
+          <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUsers">
+      <EntityTypeMapping TypeName="PhotonFactoryModel.PUser">
+        <MappingFragment StoreEntitySet="PUser">
+          <ScalarProperty Name="FailedPasswordCount" ColumnName="FailedPasswordCount" />
+          <ScalarProperty Name="EmailVerified" ColumnName="EmailVerified" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="EmailCode" ColumnName="EmailCode" />
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="NameLast" ColumnName="NameLast" />
+          <ScalarProperty Name="NameFirst" ColumnName="NameFirst" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

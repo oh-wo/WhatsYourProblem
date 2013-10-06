@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+        <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        @Styles.Render("~/Content/css")
+        <style>
+            .header {
+                float: left;
+                clear: left;
+                margin: 0;
+                font-size: 29px;
+                margin-left: 10px;
+                margin-top: 3px;
+                color: #C9C9C9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">What's your problem?</div>
+                @RenderBody()
+    </body>
+</html>
