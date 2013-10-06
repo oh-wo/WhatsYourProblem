@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhotonFactoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ChatComments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PUserID" Type="uniqueidentifier" />
+    <Property Name="ProblemID" Type="uniqueidentifier" />
+    <Property Name="Content" Type="nvarchar" MaxLength="1000" />
+    <Property Name="PostedDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Problem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+    <Property Name="PostedDate" Type="datetime2" Precision="7" />
+    <Property Name="PUserID" Type="uniqueidentifier" />
+    <Property Name="Rating" Type="int" />
+  </EntityType>
+  <EntityType Name="PUser">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="NameFirst" Type="nvarchar" MaxLength="100" />
+    <Property Name="NameLast" Type="nvarchar" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" />
+    <Property Name="LastActivityDate" Type="datetime2" Precision="7" />
+    <Property Name="EmailCode" Type="uniqueidentifier" />
+    <Property Name="Created" Type="datetime2" Precision="7" />
+    <Property Name="EmailVerified" Type="bit" />
+    <Property Name="FailedPasswordCount" Type="int" />
+  </EntityType>
+  <Association Name="FK__ChatComme__Probl__164452B1">
+    <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
+    <End Role="ChatComments" Type="Self.ChatComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Problem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ChatComments">
+        <PropertyRef Name="ProblemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ChatComme__PUser__15502E78">
+    <End Role="PUser" Type="Self.PUser" Multiplicity="0..1" />
+    <End Role="ChatComments" Type="Self.ChatComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUser">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ChatComments">
+        <PropertyRef Name="PUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Problem__PUserID__1273C1CD">
+    <End Role="PUser" Type="Self.PUser" Multiplicity="0..1" />
+    <End Role="Problem" Type="Self.Problem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUser">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Problem">
+        <PropertyRef Name="PUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhotonFactoryModelStoreContainer">
+    <EntitySet Name="ChatComments" EntityType="Self.ChatComments" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Problem" EntityType="Self.Problem" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="PUser" EntityType="Self.PUser" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <AssociationSet Name="FK__ChatComme__Probl__164452B1" Association="Self.FK__ChatComme__Probl__164452B1">
+      <End Role="Problem" EntitySet="Problem" />
+      <End Role="ChatComments" EntitySet="ChatComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ChatComme__PUser__15502E78" Association="Self.FK__ChatComme__PUser__15502E78">
+      <End Role="PUser" EntitySet="PUser" />
+      <End Role="ChatComments" EntitySet="ChatComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Problem__PUserID__1273C1CD" Association="Self.FK__Problem__PUserID__1273C1CD">
+      <End Role="PUser" EntitySet="PUser" />
+      <End Role="Problem" EntitySet="Problem" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,10 +1,41 @@
 ﻿@{
     ViewBag.Title = "Browse";
 }
+@model WhatsYourProblemCSharp.Models.PUser
 <style>
+    /*Account stuff*/
+    .accountStuff {
+        float: right;
+        width: 200px;
+    }
+
+        .accountStuff > div {
+            float: left;
+            margin-right: 10px;
+        }
+
+    .logoff {
+        cursor: pointer;
+    }
+
+        .logoff:hover {
+            text-decoration: underline;
+        }
     /*Problem stuff*/
+    .submitProblem {
+        float: left;
+        clear: left;
+        margin-left: 2.5%;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+        .submitProblem:hover {
+            text-decoration: underline;
+        }
+
     .problemContainer {
-        min-width: 70%;
+        width: 75%;
         float: left;
         clear: left;
         margin-left: 2.5%;
@@ -16,8 +47,9 @@
         margin-bottom: 1%;
         width: 100%;
     }
-    .selectedProblem > .pTitle{
-        font-weight:bold;
+
+    .selectedProblem > .pTitle {
+        font-weight: bold;
     }
 
     .voteArrowsContainer {
@@ -49,7 +81,7 @@
     .pTitle {
         float: left;
         width: 90%;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     .pOptions {
@@ -66,8 +98,89 @@
     .commentContainer {
         float: right;
         clear: right;
-        max-width: 20%;
+        width: 20%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 80%;
     }
+
+    .comment.notUser {
+        text-align: left;
+        float: left;
+        clear: both;
+    }
+
+        .comment.notUser > .colourBar {
+            background-color: green;
+            padding-left: 3%;
+            color: white;
+        }
+
+    .comment.user {
+        text-align: left;
+        float: right;
+        clear: both;
+    }
+
+        .comment.user > .colourBar {
+            background-color: blue;
+            padding-left: 3%;
+            color: white;
+        }
+
+    .comment {
+        margin-bottom: 7%;
+        width: 90%;
+    }
+
+    .commentSubmitContainer {
+        float: right;
+        height: 10%;
+        position: relative;
+        clear: right;
+        width: 20%;
+    }
+
+        .commentSubmitContainer > input[type="button"] {
+            background-color: #d3dce0;
+            border: 1px solid #787878;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 7px;
+            width: auto;
+            position: absolute;
+            bottom: 1%;
+            right: 1%;
+            padding-top: 0;
+            padding-bottom: 0;
+            font-size: 1em;
+            margin-right: 0%;
+            opacity: 0.3;
+        }
+
+            .commentSubmitContainer > input[type="button"]:hover {
+                opacity: 1;
+            }
+
+        .commentSubmitContainer > textarea {
+            height: 100%;
+            width: 96%;
+            resize: none;
+            padding-left: 3%;
+            margin: 0;
+        }
+
+    .content {
+        background-color: #ccc;
+        padding-left: 3%;
+        font-size: 0.9em;
+    }
+
+    .messageDetails {
+        font-size: 0.7em;
+        color: #696969;
+    }
+
     .pContentHolder {
         float: left;
         position: relative;
@@ -75,6 +188,7 @@
         border: solid 1px #ccc;
         margin-top: 1%;
     }
+
     .pContent {
         float: left;
         width: 98%;
@@ -95,11 +209,12 @@
         }
 
 
-        .showContent:hover {
-            text-decoration: underline;
-        }
+    .showContent:hover {
+        text-decoration: underline;
+    }
 </style>
 <script>
+    $('body').css('height', $(window).height() + 'px');
     $(document).on('click', '.pTitle', function (e) {
 
         var $this = $(this);
@@ -113,13 +228,12 @@
         }
 
         var $pContentHolder = $problem.find('.pContentHolder');
-        $pContentHolder.slideToggle();
 
     });
 
     /*
     on change selected Problem
-    
+
         */
     $(document).on('click', '.edit', function (e) {
         var $this = $(this);
@@ -127,62 +241,116 @@
         $pContent.attr('contenteditable') == 'true' ? $pContent.attr('contenteditable', 'false') : $pContent.attr('contenteditable', 'true');
         $this.text() == 'edit' ? $this.text('done') : $this.text('edit');
     })
+
+    //LOG OFF
+    $(document).on('click', '.logoff', function (e) {
+        $('.logoff').attr('disabled', 'disabled').text('logging off...');
+        $.ajax({
+            type: "POST",
+            url: "/Account/JsonLogOff",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (a) {
+                if (a) {
+                    $('.logoff').text('logged off');
+                    document.location = "/Home";
+                } else {
+                    alert('server error');
+                }
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error');
+            },
+
+        });
+    });
 </script>
+<script src="/Scripts/jquery.signalR-1.1.3.min.js"></script>
+<script src="/signalr/hubs"></script>
+<script type="text/javascript">
+    var chat;
+    $(function () {
+        chat = $.connection.chatHub;
+        chat.client.addMessage = function (name, message) {
+            $('.commentContainer').append('<div class="comment user"><div class="colourBar"><span>' + name + '</span></div><div class="content">' + message + '</div><div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div></div>');
+            $('.commentContainer').scrollTop($('.commentContainer').height());
+            $('.commentSubmitContainer > textarea').val("");
+            $('.commentSubmitContainer > input[type="button"]').removeAttr('enabled').val('send');
+
+        }
+        $(document).on('click', '.commentSubmitContainer > input[type="button"]', function (e) {
+            chat.server.send("billbob", $('.commentSubmitContainer > textarea').val(), 'test');
+            $('.commentSubmitContainer > input[type="button"]').attr('enabled', 'false').val('sending');
+        });
+        $.connection.hub.start();
+    })
+</script>
+<div class="accountStuff">
+    <div class="hiUser">Hi @Model.NameFirst</div>
+    <div class="logoff">log off</div>
+</div>
+<div class="submitProblem">
+    Submit a new problem
+</div>
+
 <div class="problemContainer">
     @for (int i = 0; i < 6; i++)
     {
-        <div class="problem">
-            <div class="voteArrowsContainer">
-                <img class="voteUpArrow" />
-                <img class="voteDownArrow" />
-            </div>
-            <div class="pTitle">
-                Can we develop new types of Chemistry at aqueous / solid interfaces, stimulated by a laser?
-            </div>
-            <div class="pOptions">
-                <div>@DateTime.UtcNow.AddHours(12).ToShortDateString()</div>
-                <div>Jake Martin</div>
-            </div>
-            <div class="pContentHolder" style="display:none;">
-                <div class="pContentControls">
-                    <span class="edit">edit</span>
-                </div>
-                <div class="pContent" contenteditable="false">
-
-                </div>
+    <div class="problem">
+        <div class="voteArrowsContainer">
+            <img class="voteUpArrow" />
+            <img class="voteDownArrow" />
+        </div>
+        <div class="pTitle">
+            Can we develop new types of Chemistry at aqueous / solid interfaces, stimulated by a laser?
+        </div>
+        <div class="pOptions">
+            <div>@DateTime.UtcNow.AddHours(12).ToShortDateString()</div>
+            <div>Jake Martin</div>
+        </div>
+        <div class="pContentHolder" style="display:none;">
+            <div class="pContentControls">
+                <span class="edit">edit</span>
             </div>
         </div>
+    </div>
     }
 </div>
 <div class="commentContainer">
     <div class="comment notUser">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
     <div class="comment user">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
     <div class="comment notUser">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
     <div class="comment notUser">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
     <div class="comment notUser">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
     <div class="comment user">
-        <div class="colourBar"></div>
+        <div class="colourBar"><span>Owen</span></div>
         <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
         <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
     </div>
+    <div></div>
+</div>
+<div class="commentSubmitContainer">
+    <textarea></textarea>
+    <input type="button" value="send" />
 </div>
