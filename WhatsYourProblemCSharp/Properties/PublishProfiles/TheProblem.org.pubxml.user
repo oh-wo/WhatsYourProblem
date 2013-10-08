@@ -176,7 +176,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:59:27</publishTime>
     </File>
     <File Include="bin/WhatsYourProblemCSharp.dll">
-      <publishTime>10/06/2013 15:57:35</publishTime>
+      <publishTime>10/08/2013 14:20:00</publishTime>
     </File>
     <File Include="bin/zh-Hans/Microsoft.Data.Edm.resources.dll">
       <publishTime>10/03/2013 15:59:35</publishTime>
@@ -368,7 +368,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Models/data.edmx.diagram">
-      <publishTime>10/05/2013 23:56:08</publishTime>
+      <publishTime>10/07/2013 21:25:49</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/05/2013 21:59:50</publishTime>
@@ -421,23 +421,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/_references.js">
       <publishTime>10/03/2013 15:59:18</publishTime>
     </File>
+    <File Include="Views/Chat/GetChat.cshtml">
+      <publishTime>10/08/2013 00:45:11</publishTime>
+    </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Home/Browse.cshtml">
-      <publishTime>10/06/2013 00:31:16</publishTime>
+      <publishTime>10/08/2013 14:18:58</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>10/06/2013 00:21:40</publishTime>
+      <publishTime>10/07/2013 12:18:56</publishTime>
+    </File>
+    <File Include="Views/Problem/ProblemContainer.cshtml">
+      <publishTime>10/08/2013 00:45:10</publishTime>
+    </File>
+    <File Include="Views/Problem/Submit.cshtml">
+      <publishTime>10/08/2013 14:24:22</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>10/05/2013 21:19:19</publishTime>
+      <publishTime>10/07/2013 12:18:56</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
@@ -449,7 +458,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/06/2013 16:42:41</publishTime>
+      <publishTime>10/07/2013 22:33:22</publishTime>
     </File>
   </ItemGroup>
 </Project>

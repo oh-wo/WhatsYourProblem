@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ae4c6f05c76f4a5483066c805713495f" Name="Diagram1">
-        <EntityTypeShape EntityType="PhotonFactoryModel.ChatComment" Width="1.5" PointX="5.25" PointY="2.75" />
-        <EntityTypeShape EntityType="PhotonFactoryModel.Problem" Width="1.5" PointX="3" PointY="2.625" />
-        <EntityTypeShape EntityType="PhotonFactoryModel.PUser" Width="1.5" PointX="0.75" PointY="2.25" />
+      <Diagram DiagramId="ae4c6f05c76f4a5483066c805713495f" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="PhotonFactoryModel.ChatComment" Width="1.5" PointX="6.693590213867644" PointY="24.041518893112205" />
+        <EntityTypeShape EntityType="PhotonFactoryModel.Problem" Width="1.5" PointX="5.6010289050643465" PointY="1.9727717498190569" />
+        <EntityTypeShape EntityType="PhotonFactoryModel.PUser" Width="1.5" PointX="6.8529632291071874" PointY="5.6879808780215591" />
         <AssociationConnector Association="PhotonFactoryModel.FK__ChatComme__Probl__164452B1" />
         <AssociationConnector Association="PhotonFactoryModel.FK__ChatComme__PUser__15502E78" />
         <AssociationConnector Association="PhotonFactoryModel.FK__Problem__PUserID__1273C1CD" />

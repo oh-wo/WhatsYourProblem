@@ -15,6 +15,7 @@
     <EntitySetMapping Name="Problems">
       <EntityTypeMapping TypeName="PhotonFactoryModel.Problem">
         <MappingFragment StoreEntitySet="Problem">
+          <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="PUserID" ColumnName="PUserID" />
           <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />

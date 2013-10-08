@@ -13,7 +13,15 @@
         $cover = $('.submitProblem-cover');
         $cover.css('width', $(window).width() + 'px').css('height', $(window).height() + 'px');
     });
+    $('.newProblemText').bind('keyup', function (e) {
 
+        if (e.which === 13) { // 13 is enter key
+
+            $('.submitProblem-form > submit').trigger('click');
+
+        }
+
+    });
     function submitNewProblemForm() {
         $('.submitProblem-container > input').attr('disabled', 'disabled');
         var data = {
@@ -26,11 +34,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: dataToPost,
-            success: function (a) {
-                if (a) {
+            success: function (id) {
+                if (id!=null) {
                     $('.closeBox').trigger('click');
                     ClearSubmitNewProblemContainer();
                     $('.submitProblem-container > input').removeAttr('disabled');
+                    problem.server.addProblem(id)
                 } else {
                     alert('server error');
                 }
@@ -82,13 +91,12 @@
         font-size: 2em;
     }
 
-    .submitProblem-container > * > *> input[type="text"] {
+    .newProblemText, .newProblemText.valid {
         border: 1px solid #e2e2e2;
         background: #fff;
         font-size: 1.2em;
         margin: 5px 0 6px 0;
         padding: 5px;
-        width: 300px;
         padding: 1%;
         width: 80%;
         font-weight: bold;
@@ -139,9 +147,10 @@
     <form id="submitProblem-form">
         <div class="helpText">enter a new problem title</div>
         <div class="control-group">
-            <input type="text" class="newProblemText" name="newProblemText" />
+            <input type="text" class="newProblemText" name="newProblemText" tabindex="-1"/>
         </div>
         <input type="submit" value="submit" />
         <div class="closeBox">close</div>
     </form>
 </div>
+

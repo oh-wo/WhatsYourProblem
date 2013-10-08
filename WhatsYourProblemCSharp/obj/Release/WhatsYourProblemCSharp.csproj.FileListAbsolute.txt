@@ -84,7 +84,6 @@ C:\Users\Owen\documents\visual studio 2013\Projects\WhatsYourProblemCSharp\Whats
 C:\Users\Owen\documents\visual studio 2013\Projects\WhatsYourProblemCSharp\WhatsYourProblemCSharp\obj\Release\WhatsYourProblemCSharp.csprojResolveAssemblyReference.cache
 C:\Users\Owen\documents\visual studio 2013\Projects\WhatsYourProblemCSharp\WhatsYourProblemCSharp\obj\Release\WhatsYourProblemCSharp.dll
 C:\Users\Owen\documents\visual studio 2013\Projects\WhatsYourProblemCSharp\WhatsYourProblemCSharp\obj\Release\WhatsYourProblemCSharp.pdb
-C:\Users\Owen\Documents\GitHub\WhatsYourProblem\WhatsYourProblemCSharp\bin\WhatsYourProblemCSharp.dll.config
 C:\Users\Owen\Documents\GitHub\WhatsYourProblem\WhatsYourProblemCSharp\bin\WhatsYourProblemCSharp.dll
 C:\Users\Owen\Documents\GitHub\WhatsYourProblem\WhatsYourProblemCSharp\bin\WhatsYourProblemCSharp.pdb
 C:\Users\Owen\Documents\GitHub\WhatsYourProblem\WhatsYourProblemCSharp\bin\Antlr3.Runtime.dll

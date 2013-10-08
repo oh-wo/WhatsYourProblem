@@ -35,11 +35,13 @@
         }
 
     .problemContainer {
-        width: 75%;
-        float: left;
-        clear: left;
-        margin-left: 2.5%;
-    }
+width: 26%;
+float: left;
+clear: left;
+margin-left: 2.5%;
+overflow-y: auto;
+overflow-x: hidden;
+}
 
     .problem {
         float: left;
@@ -92,7 +94,7 @@
 
         .pOptions > div {
             float: left;
-            margin-right: 0.5%;
+            margin-right: 1%;
         }
     /*Comment stuff*/
     .commentContainer {
@@ -101,7 +103,7 @@
         width: 20%;
         overflow-x: hidden;
         overflow-y: scroll;
-        height: 80%;
+        height: 60%;
     }
 
     .comment.notUser {
@@ -168,6 +170,8 @@
             resize: none;
             padding-left: 3%;
             margin: 0;
+            overflow-y:auto;
+            overflow-x:hidden;
         }
 
     .content {
@@ -212,37 +216,250 @@
     .showContent:hover {
         text-decoration: underline;
     }
+
+    .problemContentContainer {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 70%;
+        border: solid 1px #000;
+    }
+
+    .editProblem {
+position: absolute;
+top: -21px;
+right: -1px;
+cursor: pointer;
+z-index: 1;
+background-color: #ccc;
+padding-left: 3px;
+padding-right: 3px;
+border-top: solid 1px #000;
+border-left: solid 1px #000;
+border-right: solid 1px #000;
+}
+        .editProblem[disabled="disabled"] {
+            cursor:default;
+        }
+        .editProblem[disabled="disabled"]:hover {
+            text-decoration: none;
+        }
+        .editProblem:hover {
+            text-decoration: underline;
+        }
+
+    .problemContent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 98%;
+        height: 95%;
+        padding:1%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .deleteProblem {
+        text-decoration:underline;
+        cursor:pointer;
+    }
 </style>
 <script>
+    //FORMATTING ETC
     $('body').css('height', $(window).height() + 'px');
-    $(document).on('click', '.pTitle', function (e) {
+    //PROBLEM MANAGEMENT
+    $(document).on('click', '.problem', function (e) {
 
-        var $this = $(this);
-        var $problem = $this.closest('.problem');
+        var $problem = $(this);
+        var problemid = $problem.attr('problemid');
         var wasSelected = $problem.hasClass('selectedProblem');
+        
+        var $oldSelectedProblem = $('.selectedProblem');
+        var wasEditingOldSelectedProblem = $oldSelectedProblem.attr('editingid') == currentUserID;
+        var oldProblemID = $oldSelectedProblem.attr('problemid');
+        var oldContent = $('.problemContent').html();
+        var oldProblemTitle = $oldSelectedProblem.find('.pTitle').text();
         $('.problem').removeClass('selectedProblem');
 
 
         if (!wasSelected) {
             $problem.addClass('selectedProblem');
+            if (wasEditingOldSelectedProblem) {
+                QuickBackgroundSave(oldProblemID, oldContent, oldProblemTitle);
+            }
+            LoadContent(problemid);
+            LoadChat(problemid);
+            chat.server.joinGroup(problemid);
+        } else {
+            chat.server.leaveGroup(problemid);
+            ClearContent();
+            ClearChat();
+            
+        }
+    });
+    $(document).on('click', '.editProblem', function (e) {
+        $this = $(this);
+        if ($this.attr('disabled') == null) {
+
+            $problemContent = $('.problemContent');
+            if ($problemContent.attr('contenteditable') == 'false') {
+                problem.server.startEditing(currentUserID, $('.selectedProblem').attr('problemid'))
+                $problemContent.attr('contenteditable', 'true');
+                $this.text('click to save');
+                $problemContent.focus();
+            } else {
+                SaveContent($('.selectedProblem').attr('problemid'), $('.problemContent').html());
+            }
+        }
+    });
+    $(document).on('click', '.submitProblem', function (e) {
+        $('.submitProblem-container').fadeIn(100);
+        $('.submitProblem-cover').fadeIn(100);
+        $('.newProblemText').focus();
+    });
+    $(document).on('mouseenter', '.problem', function (e) {
+        $(this).find('.deleteProblem').css('display', 'block');
+    });
+    $(document).on('mouseleave', '.problem', function (e) {
+        $(this).find('.deleteProblem').css('display', 'none');
+    });
+    $(document).on('click', '.deleteProblem', function (e) {
+        var $problem = $(this).closest('.problem');
+        if (confirm('Are you sure you want to delete "' + $problem.find('.pTitle').text() + '"?')) {
+            e.stopPropagation();
+            DeleteProblem($problem.attr('problemid'), $problem);
+        }
+    });
+    $(document).keydown(function (event) {
+
+        //19 for Mac Command+S
+        if (!(String.fromCharCode(event.which).toLowerCase() == 's' && event.ctrlKey) && !(event.which == 19)) return true;
+        $problemContent = $('.problemContent');
+        if ($problemContent.attr('contenteditable') == 'true') {
+            SaveContent($('.selectedProblem').attr('problemid'), $('.problemContent').html());
         }
 
-        var $pContentHolder = $problem.find('.pContentHolder');
-
+        event.preventDefault();
+        return false;
     });
+    function LoadContent(problemID) {
+        $('.editProblem').css('display', 'none');
+        $('.problemContent').text('loading...');
+        var data = {
+            problemID: problemID,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Problem/GetContent",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (a) {
+                if (a != 'failure') {
+                    $('.problemContent').html(a);
+                    var editingID = $('.problem[problemid="' + problemID + '"]').attr('editingid');
+                    if ((editingID != currentUserID) && editingID != null) {
+                        $('.editProblem').css('display', 'block').text('someone is editing this').attr('disabled', 'disabled');
+                    } else {
+                        $('.editProblem').css('display', 'block').text('edit').removeAttr('disabled');
+                    }
+                } else {
+                    $('.problemContent').html('<div style="color:red;">Server error - getting problem content. This problem may no longer exist?</div>');
+                }
+            },
+            error: function (ex) {
+                //communication error
+                $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
+            },
 
-    /*
-    on change selected Problem
+        });
+    }
+    function QuickBackgroundSave(problemID, content, problemTitle) {
+        //no modification to elements etc, just save, move on.
+        var data = {
+            problemID: problemID,
+            content: content,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Problem/SaveContent",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (a) {
+                if (a) {
+                    //great
+                } else {
+                    alert('server error saving: '+problemTitle);
+                }
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error saving:'+problemTitle+'- please check your connection');
+            },
 
-        */
-    $(document).on('click', '.edit', function (e) {
-        var $this = $(this);
-        var $pContent = $this.closest('.problem').find('.pContent');
-        $pContent.attr('contenteditable') == 'true' ? $pContent.attr('contenteditable', 'false') : $pContent.attr('contenteditable', 'true');
-        $this.text() == 'edit' ? $this.text('done') : $this.text('edit');
-    })
+        });
+    };
+    function SaveContent(problemID, content) {
+        $('.editProblem').attr('disabled', 'disabled').text('saving...');
+        $('.problemContent').attr('contenteditable', 'false');
+        var data = {
+            problemID: problemID,
+            content: content,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Problem/SaveContent",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (a) {
+                if (a) {
+                    problem.server.stopEditing(currentUserID, $('.selectedProblem').attr('problemid'));
+                    $('.editProblem').text('edit').removeAttr('disabled');
+                } else {
+                    alert('server error saving');
+                }
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error saving - please check your connection');
+            },
 
-    //LOG OFF
+        });
+    }
+    function DeleteProblem(problemID, $problem) {
+        var data = {
+            problemID: problemID,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Problem/DeleteProblem",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (a) {
+                if (a) {
+                    problem.server.aProblemHasBeenDeleted(problemID);
+                } else {
+                    alert('server error deleting');
+                }
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error deleting - please check your connection');
+            },
+
+        });
+    }
+    function ClearContent() {
+        $('.problemContent').html("");
+        $('.editProblem').css('display', 'none');
+    }
+    //AUTHENTICATION
     $(document).on('click', '.logoff', function (e) {
         $('.logoff').attr('disabled', 'disabled').text('logging off...');
         $.ajax({
@@ -265,92 +482,180 @@
 
         });
     });
+    //CHAT
+    function LoadChat(problemID) {
+        $('.commentContainer').html('<div>loading comments...</div>');
+        var data = {
+            problemID: problemID,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Chat/GetChat",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            data: dataToPost,
+            success: function (data) {
+                $('.commentContainer').html(data);
+                $('.commentContainer').scrollTop(999999);
+            },
+            error: function (ex) {
+                //communication error
+               // $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
+            },
+
+        });
+    }
+    function CreateChat(problemID, content) {
+        $('#chatContent').attr('disabled', 'disabled');
+        $('#submitChat').attr('disabled', 'disabled');
+        var data = {
+            problemID: problemID,
+            content : content,
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Chat/Create",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (id) {
+                chat.server.send(id);
+                $('#chatContent').removeAttr('disabled').val("");
+                $('#submitChat').removeAttr('disabled').val("enter");
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error');
+            },
+
+        });
+    }
+    function ClearChat() {
+        $('.commentContainer').html('');
+    }
+    $(document).ready(function () {
+        $('#chatContent').bind('keydown', function (e) {
+
+            if (e.which === 13) { // 13 is enter key
+
+                submitChat();
+
+            }
+
+        });
+    });
+    $(document).on('click', '#submitChat', function (e) {
+        submitChat();
+    });
+    function submitChat() {
+        var content = $('#chatContent').val();
+        if (content != "") {
+            CreateChat($('.selectedProblem').attr('problemid'), content);
+        }
+    }
 </script>
 <script src="/Scripts/jquery.signalR-1.1.3.min.js"></script>
 <script src="/signalr/hubs"></script>
+<input type="hidden" id="userid" value="@Model.ID" />
 <script type="text/javascript">
+    var currentUserID = $('#userid').val();
     var chat;
     $(function () {
         chat = $.connection.chatHub;
-        chat.client.addMessage = function (name, message) {
-            $('.commentContainer').append('<div class="comment user"><div class="colourBar"><span>' + name + '</span></div><div class="content">' + message + '</div><div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div></div>');
-            $('.commentContainer').scrollTop($('.commentContainer').height());
+        chat.client.addMessage = function (posterid,name, message,datetime) {
+            var chatMessage = '';
+            chatMessage += '<div class="comment '+(posterid==currentUserID?'user':'notUser')+'">';
+            chatMessage +='<div class="colourBar"><span>'+name+'</span></div>';
+            chatMessage +='<div class="content">'+message+'</div>';
+            chatMessage +='<div class="messageDetails"><span class="messageDate">'+datetime+'</span></div>';
+            chatMessage += '</div>';
+            $(chatMessage).appendTo('.commentContainer')
+            $('.commentContainer').scrollTop(999999);
             $('.commentSubmitContainer > textarea').val("");
             $('.commentSubmitContainer > input[type="button"]').removeAttr('enabled').val('send');
 
         }
-        $(document).on('click', '.commentSubmitContainer > input[type="button"]', function (e) {
-            chat.server.send("billbob", $('.commentSubmitContainer > textarea').val(), 'test');
-            $('.commentSubmitContainer > input[type="button"]').attr('enabled', 'false').val('sending');
-        });
+        $.connection.hub.start();
+    })
+    var problem;
+    $(function () {
+        problem = $.connection.problemHub;
+        problem.client.addProblem = function (id,title,shortDate,firstName,submitterUserID) {
+            var probString ="";
+            probString +='<div class="problem new" style="display:none;" problemid="'+id+'">';
+            probString +='<div class="voteArrowsContainer">';
+            probString +='<!--<img class="voteUpArrow" />';
+            probString +='<img class="voteDownArrow" />';
+            probString +='</div>-->';
+            probString +='<div class="pTitle">'+title+'</div>';
+            probString +='<div class="pOptions">';
+            probString += '<div>' + shortDate + '</div>';
+            probString += '<div>' + firstName + '</div>';
+            if (submitterUserID == currentUserID) {
+                probString += '<div class="deleteProblem" style="display:none;">[delete]</div>';
+            }
+            probString +='</div>';
+            probString += '</div>';
+            $(probString).prependTo('.problemContainer');
+            $('.new').fadeIn(500, function () {
+                $('.new').removeClass('new');
+            });
+        }
+        problem.client.someoneHasStartedEditing = function (userid, problemid) {
+            //set attribute on the problem
+            $('.problem[problemid="' + problemid + '"]').attr('editingid', userid);
+            //stop user from editing document if they are currently unless they're the user who made all this nonsense happen.
+            if (($('.selectedProblem').attr('problemid') == problemid) && (userid != currentUserID)) {
+                $('.problemContent').removeAttr('contenteditable');
+                $('.editProblem').attr('disabled', 'disabled').text('someone is editing this');
+            };
+            
+        }
+        problem.client.someoneHasStoppedEditing = function (userid, problemid) {
+            //set attribute on the problem
+            $('.problem[problemid="' + problemid + '"]').removeAttr('editingid');
+            //if user has this open already and  they're not the user that made this happen then let them have the option of editing if they want
+            if (($('.selectedProblem').attr('problemid') == problemid) && (userid != currentUserID)) {
+                LoadContent(problemid);//update data to reflect most recent
+                $('.editProblem').removeAttr('disabled').text('edit');
+            };
+
+        }
+        problem.client.removeProblemFromView = function (problemid) {
+            if ($('.selectedProblem').attr('problemid') == problemid) {
+                //user is editing the problem which the original editer wants to delete
+                $('.problemContent').html('');
+                ClearChat();
+            }
+            $('.problem[problemid="' + problemid + '"]').fadeOut(500);
+
+        }
         $.connection.hub.start();
     })
 </script>
 <div class="accountStuff">
     <div class="hiUser">Hi @Model.NameFirst</div>
     <div class="logoff">log off</div>
+
 </div>
 <div class="submitProblem">
     Submit a new problem
 </div>
 
 <div class="problemContainer">
-    @for (int i = 0; i < 6; i++)
-    {
-    <div class="problem">
-        <div class="voteArrowsContainer">
-            <img class="voteUpArrow" />
-            <img class="voteDownArrow" />
-        </div>
-        <div class="pTitle">
-            Can we develop new types of Chemistry at aqueous / solid interfaces, stimulated by a laser?
-        </div>
-        <div class="pOptions">
-            <div>@DateTime.UtcNow.AddHours(12).ToShortDateString()</div>
-            <div>Jake Martin</div>
-        </div>
-        <div class="pContentHolder" style="display:none;">
-            <div class="pContentControls">
-                <span class="edit">edit</span>
-            </div>
-        </div>
+    @Html.Action("ProblemContainer", "Problem")
+</div>
+<div class="problemContentContainer">
+    <div class="editProblem" style="display:none;">edit</div>
+    <div class="problemContent" contenteditable="false" tabindex="1">
     </div>
-    }
 </div>
 <div class="commentContainer">
-    <div class="comment notUser">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div class="comment user">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div class="comment notUser">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div class="comment notUser">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div class="comment notUser">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div class="comment user">
-        <div class="colourBar"><span>Owen</span></div>
-        <div class="content">I thought this idea could be great for the stuff we were talking about last week?</div>
-        <div class="messageDetails"><span class="messageDate">4/3/12 9.10am</span></div>
-    </div>
-    <div></div>
 </div>
-<div class="commentSubmitContainer">
-    <textarea></textarea>
-    <input type="button" value="send" />
-</div>
+<form id="commentSubmitContainer" class="commentSubmitContainer">
+    <textarea id="chatContent"></textarea>
+    <input id="submitChat" type="button" value="enter"/>
+</form>
+@Html.Action("Submit", "Problem")

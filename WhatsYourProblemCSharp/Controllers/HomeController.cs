@@ -12,6 +12,7 @@ namespace WhatsYourProblemCSharp.Controllers
     {
         public ActionResult Index()
         {
+           
             if (AuthenticationHelper.IsloggedIn)
             {
                 return RedirectToAction("Browse");
@@ -40,4 +41,5 @@ namespace WhatsYourProblemCSharp.Controllers
         }
 
     }
+
 }

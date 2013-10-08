@@ -16,7 +16,7 @@
         </div>
         <div class="pTitle">@problem.Title</div>
         <div class="pOptions">
-            <div>@problem.PostedDate.Value.AddHours(13).ToShortDateString()</div>
+            <div>@problem.PostedDate.Value.AddHours(11).ToShortDateString()</div>
             <div>@problem.PUser.NameFirst</div>
             @if (new Guid(User.Identity.Name) == problem.PUserID)
                     {

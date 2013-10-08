@@ -25,6 +25,7 @@ namespace WhatsYourProblemCSharp.Models
         public Nullable<System.DateTime> PostedDate { get; set; }
         public Nullable<System.Guid> PUserID { get; set; }
         public Nullable<int> Rating { get; set; }
+        public Nullable<System.Guid> EditedBy { get; set; }
     
         public virtual ICollection<ChatComment> ChatComments { get; set; }
         public virtual PUser PUser { get; set; }

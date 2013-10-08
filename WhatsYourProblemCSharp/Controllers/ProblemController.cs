@@ -21,7 +21,7 @@ namespace WhatsYourProblemCSharp.Controllers
         [HttpPost]
         public JsonResult Create(string title)
         {
-            bool success = false;
+            Guid? id = null;
             try
             {
                 using (PhotonFactoryEntities db = new PhotonFactoryEntities())
@@ -36,7 +36,7 @@ namespace WhatsYourProblemCSharp.Controllers
                     };
                     db.Problems.Add(prob);
                     db.SaveChanges();
-                    success = true;
+                    id = prob.ID;
                 }
 
             }
@@ -44,7 +44,7 @@ namespace WhatsYourProblemCSharp.Controllers
             {
 
             }
-            return Json(success);
+            return Json(id);
         }
 
         [AuthenticationHelper.IsUser]
@@ -56,6 +56,83 @@ namespace WhatsYourProblemCSharp.Controllers
                 problems = db.Problems.Include("PUser").Take(10).ToList();
             }
             return View(problems);
+        }
+
+        [HttpPost]
+        public JsonResult GetContent(Guid problemID)
+        {
+            string content = "failure";
+            try
+            {
+                using (PhotonFactoryEntities db = new PhotonFactoryEntities())
+                {
+                    Problem prob = db.Problems.FirstOrDefault(p => p.ID == problemID);
+                    if (prob != null)
+                    {
+                        content = prob.Content;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(content);
+        }
+
+        [HttpPost]
+        public JsonResult SaveContent(Guid problemID, string content)
+        {
+            bool success = false;
+            try
+            {
+                using (PhotonFactoryEntities db = new PhotonFactoryEntities())
+                {
+                    Problem prob = db.Problems.FirstOrDefault(p => p.ID == problemID);
+                    if (prob != null)
+                    {
+                        prob.Content = content;
+                        db.SaveChanges();
+                        success = true;
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(success);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteProblem(Guid problemID)
+        {
+            bool success = false;
+            try
+            {
+                using (PhotonFactoryEntities db = new PhotonFactoryEntities())
+                {
+                    Problem prob = db.Problems.FirstOrDefault(p => p.ID == problemID);
+                    List<ChatComment> chatComments = db.ChatComments.Where(c => c.ProblemID == problemID).ToList();
+                    if (prob != null)
+                    {
+                        foreach (ChatComment chat in chatComments)
+                        {
+                            db.ChatComments.Remove(chat);
+                        }
+                        db.Problems.Remove(prob);
+                        db.SaveChanges();
+                        success = true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(success);
         }
 
     }

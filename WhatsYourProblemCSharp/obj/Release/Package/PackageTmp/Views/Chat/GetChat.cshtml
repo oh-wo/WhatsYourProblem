@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+
+@using WhatsYourProblemCSharp.Models;
+@model List<ChatComment>
+
+@foreach (ChatComment chat in Model)
+{
+    <div class="comment @Html.Raw(chat.PUserID==new Guid(User.Identity.Name)?"user":"notUser")">
+        <div class="colourBar"><span>@chat.PUser.NameFirst</span></div>
+        <div class="content">@chat.Content</div>
+        <div class="messageDetails"><span class="messageDate">@chat.PostedDate.Value.AddHours(11).ToShortDateString() @chat.PostedDate.Value.AddHours(11).ToShortTimeString()</span></div>
+    </div>
+}

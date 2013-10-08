@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+}
+<script>
+    $(document).on('click', '.closeBox', function (e) {
+        $(this).closest('.submitProblem-container').fadeOut(100);
+        $('.submitProblem-cover').fadeOut(100);
+    });
+    $(document).ready(function (e) {
+        $container = $('.submitProblem-container');
+        $container.css('left', ($(window).width() - $container.width()) / 4 + 'px').css('top', ($(window).height() - $container.height()) / 4 + 'px');
+
+        $cover = $('.submitProblem-cover');
+        $cover.css('width', $(window).width() + 'px').css('height', $(window).height() + 'px');
+    });
+    $('.newProblemText').bind('keyup', function (e) {
+
+        if (e.which === 13) { // 13 is enter key
+
+            $('.submitProblem-form > submit').trigger('click');
+
+        }
+
+    });
+    function submitNewProblemForm() {
+        $('.submitProblem-container > input').attr('disabled', 'disabled');
+        var data = {
+            title: $('.newProblemText').val()
+        };
+        var dataToPost = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "/Problem/Create",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: dataToPost,
+            success: function (id) {
+                if (id!=null) {
+                    $('.closeBox').trigger('click');
+                    ClearSubmitNewProblemContainer();
+                    $('.submitProblem-container > input').removeAttr('disabled');
+                    problem.server.addProblem(id)
+                } else {
+                    alert('server error');
+                }
+            },
+            error: function (ex) {
+                //communication error
+                alert('communication error');
+            },
+
+        });
+    }
+    $(document).ready(function () {
+        $('#submitProblem-form').validate({
+            rules: {
+                newProblemText: 'required',
+            },
+            messages: {
+                newProblemText: 'Please enter a problem',
+            },
+            highlight: function (label) {
+                $(label).closest('.control-group').addClass('error');
+            },
+            success: function (label) {
+                label.text('✓').addClass('valid').closest('.control-group').addClass('success');
+            },
+            submitHandler: function () {
+                submitNewProblemForm();
+            },
+        });
+    });
+    function ClearSubmitNewProblemContainer() {
+        $('.newProblemText').val("")
+    }
+</script>
+<style>
+    .submitProblem-container {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        background-color: #000;
+        padding: 2%;
+        opacity: 0.9;
+        color: #fff;
+        width: 60%;
+        height: 100px;
+    }
+
+    .helpText {
+        font-size: 2em;
+    }
+
+    .newProblemText, .newProblemText.valid {
+        border: 1px solid #e2e2e2;
+        background: #fff;
+        font-size: 1.2em;
+        margin: 5px 0 6px 0;
+        padding: 5px;
+        padding: 1%;
+        width: 80%;
+        font-weight: bold;
+        color: green;
+        float: left;
+    }
+
+    .submitProblem-container > * > input[type="submit"] {
+        float: left;
+        margin-left: 1%;
+        padding: 1%;
+    }
+
+    .closeBox {
+        cursor: pointer;
+        font-size: 2em;
+        float: right;
+        clear: both;
+        margin-right: -10px;
+    }
+    .submitProblem-cover{
+        position:absolute;
+        top:0;
+        left:0;
+    }
+    .error {
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+        .error.valid {
+            color: #008603;
+        }
+
+    label.error:not(.valid) {
+        color: #f00;
+    }
+
+    .control-group > label:not(.error) {
+        float: left;
+        width: 150px;
+        clear: left;
+    }
+</style>
+<div class="submitProblem-cover" style="display:none;"></div>
+<div class="submitProblem-container" style="display:none;">
+    <form id="submitProblem-form">
+        <div class="helpText">enter a new problem title</div>
+        <div class="control-group">
+            <input type="text" class="newProblemText" name="newProblemText" tabindex="-1"/>
+        </div>
+        <input type="submit" value="submit" />
+        <div class="closeBox">close</div>
+    </form>
+</div>
+
