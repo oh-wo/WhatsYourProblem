@@ -295,6 +295,25 @@ border-right: solid 1px #000;
             ClearChat();
             
         }
+        //this bit handles the table view etc.
+        if ($oldSelectedProblem.length == 0) {
+            //nothing was previously selected
+            $('.problemContainer').animate({ "width": "26%" }, function () {
+                $('.problemContentContainer').css('display', 'block');
+                $('.commentContainer').css('display', 'block');
+                $('.commentSubmitContainer').css('display', 'block');
+            });
+            
+        } else {
+            //something was previously selected
+            if ($('.selectedProblem').length==0) {
+                //but nothing is selected now
+                $('.problemContentContainer').css('display', 'none');
+                $('.commentContainer').css('display', 'none');
+                $('.commentSubmitContainer').css('display', 'none');
+                $('.problemContainer').animate({ "width": "90%" });
+            }
+        }
     });
     $(document).on('click', '.editProblem', function (e) {
         $this = $(this);
