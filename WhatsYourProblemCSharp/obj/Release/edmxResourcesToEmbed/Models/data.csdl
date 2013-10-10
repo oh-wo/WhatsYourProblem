@@ -35,7 +35,7 @@
     </Key>
     <Property Type="Guid" Name="ID" Nullable="false" />
     <Property Type="String" Name="Title" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Content" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Content" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="DateTime" Name="PostedDate" Precision="7" />
     <Property Type="Guid" Name="PUserID" />
     <Property Type="Int32" Name="Rating" />

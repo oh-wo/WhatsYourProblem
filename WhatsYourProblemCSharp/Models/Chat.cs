@@ -5,7 +5,9 @@ using System.Web;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using WhatsYourProblemCSharp.Models;
+using WhatsYourProblemCSharp.Helpers;
 
 
 namespace WhatsYourProblemCSharp
@@ -94,5 +96,7 @@ namespace WhatsYourProblemCSharp
         {
             Clients.All.removeProblemFromView(problemid);
         }
+
+        
     }
 }

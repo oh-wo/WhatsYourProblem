@@ -35,13 +35,13 @@
         }
 
     .problemContainer {
-width: 26%;
-float: left;
-clear: left;
-margin-left: 2.5%;
-overflow-y: auto;
-overflow-x: hidden;
-}
+        width: 26%;
+        float: left;
+        clear: left;
+        margin-left: 2.5%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 
     .problem {
         float: left;
@@ -170,8 +170,8 @@ overflow-x: hidden;
             resize: none;
             padding-left: 3%;
             margin: 0;
-            overflow-y:auto;
-            overflow-x:hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
     .content {
@@ -226,24 +226,27 @@ overflow-x: hidden;
     }
 
     .editProblem {
-position: absolute;
-top: -21px;
-right: -1px;
-cursor: pointer;
-z-index: 1;
-background-color: #ccc;
-padding-left: 3px;
-padding-right: 3px;
-border-top: solid 1px #000;
-border-left: solid 1px #000;
-border-right: solid 1px #000;
-}
+        position: absolute;
+        top: -21px;
+        right: -1px;
+        cursor: pointer;
+        z-index: 1;
+        background-color: #ccc;
+        padding-left: 3px;
+        padding-right: 3px;
+        border-top: solid 1px #000;
+        border-left: solid 1px #000;
+        border-right: solid 1px #000;
+    }
+
         .editProblem[disabled="disabled"] {
-            cursor:default;
+            cursor: default;
         }
-        .editProblem[disabled="disabled"]:hover {
-            text-decoration: none;
-        }
+
+            .editProblem[disabled="disabled"]:hover {
+                text-decoration: none;
+            }
+
         .editProblem:hover {
             text-decoration: underline;
         }
@@ -254,15 +257,17 @@ border-right: solid 1px #000;
         left: 0;
         width: 98%;
         height: 95%;
-        padding:1%;
+        padding: 1%;
         overflow-x: hidden;
         overflow-y: scroll;
     }
+
     .deleteProblem {
-        text-decoration:underline;
-        cursor:pointer;
+        text-decoration: underline;
+        cursor: pointer;
     }
 </style>
+<script src="~/Scripts/bootstrap-wysiwyg.js"></script>
 <script>
     //FORMATTING ETC
     $('body').css('height', $(window).height() + 'px');
@@ -272,7 +277,7 @@ border-right: solid 1px #000;
         var $problem = $(this);
         var problemid = $problem.attr('problemid');
         var wasSelected = $problem.hasClass('selectedProblem');
-        
+
         var $oldSelectedProblem = $('.selectedProblem');
         var wasEditingOldSelectedProblem = $oldSelectedProblem.attr('editingid') == currentUserID;
         var oldProblemID = $oldSelectedProblem.attr('problemid');
@@ -293,8 +298,27 @@ border-right: solid 1px #000;
             chat.server.leaveGroup(problemid);
             ClearContent();
             ClearChat();
+
+        }/*
+        //this bit handles the table view etc.
+        if ($oldSelectedProblem.length == 0) {
+            //nothing was previously selected
+            $('.problemContainer').animate({ "width": "26%" }, function () {
+                $('.problemContentContainer').css('display', 'block');
+                $('.commentContainer').css('display', 'block');
+                $('.commentSubmitContainer').css('display', 'block');
+            });
             
-        }
+        } else {
+            //something was previously selected
+            if ($('.selectedProblem').length==0) {
+                //but nothing is selected now
+                $('.problemContentContainer').css('display', 'none');
+                $('.commentContainer').css('display', 'none');
+                $('.commentSubmitContainer').css('display', 'none');
+                $('.problemContainer').animate({ "width": "90%" });
+            }
+        }*/
     });
     $(document).on('click', '.editProblem', function (e) {
         $this = $(this);
@@ -391,12 +415,12 @@ border-right: solid 1px #000;
                 if (a) {
                     //great
                 } else {
-                    alert('server error saving: '+problemTitle);
+                    alert('server error saving: ' + problemTitle);
                 }
             },
             error: function (ex) {
                 //communication error
-                alert('communication error saving:'+problemTitle+'- please check your connection');
+                alert('communication error saving:' + problemTitle + '- please check your connection');
             },
 
         });
@@ -459,6 +483,9 @@ border-right: solid 1px #000;
         $('.problemContent').html("");
         $('.editProblem').css('display', 'none');
     }
+    $(document).ready(function () {
+      //  $('.problemContent').wysiwyg();
+    });
     //AUTHENTICATION
     $(document).on('click', '.logoff', function (e) {
         $('.logoff').attr('disabled', 'disabled').text('logging off...');
@@ -501,7 +528,7 @@ border-right: solid 1px #000;
             },
             error: function (ex) {
                 //communication error
-               // $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
+                // $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
             },
 
         });
@@ -511,7 +538,7 @@ border-right: solid 1px #000;
         $('#submitChat').attr('disabled', 'disabled');
         var data = {
             problemID: problemID,
-            content : content,
+            content: content,
         };
         var dataToPost = JSON.stringify(data);
         $.ajax({
@@ -564,12 +591,12 @@ border-right: solid 1px #000;
     var chat;
     $(function () {
         chat = $.connection.chatHub;
-        chat.client.addMessage = function (posterid,name, message,datetime) {
+        chat.client.addMessage = function (posterid, name, message, datetime) {
             var chatMessage = '';
-            chatMessage += '<div class="comment '+(posterid==currentUserID?'user':'notUser')+'">';
-            chatMessage +='<div class="colourBar"><span>'+name+'</span></div>';
-            chatMessage +='<div class="content">'+message+'</div>';
-            chatMessage +='<div class="messageDetails"><span class="messageDate">'+datetime+'</span></div>';
+            chatMessage += '<div class="comment ' + (posterid == currentUserID ? 'user' : 'notUser') + '">';
+            chatMessage += '<div class="colourBar"><span>' + name + '</span></div>';
+            chatMessage += '<div class="content">' + message + '</div>';
+            chatMessage += '<div class="messageDetails"><span class="messageDate">' + datetime + '</span></div>';
             chatMessage += '</div>';
             $(chatMessage).appendTo('.commentContainer')
             $('.commentContainer').scrollTop(999999);
@@ -582,21 +609,21 @@ border-right: solid 1px #000;
     var problem;
     $(function () {
         problem = $.connection.problemHub;
-        problem.client.addProblem = function (id,title,shortDate,firstName,submitterUserID) {
-            var probString ="";
-            probString +='<div class="problem new" style="display:none;" problemid="'+id+'">';
-            probString +='<div class="voteArrowsContainer">';
-            probString +='<!--<img class="voteUpArrow" />';
-            probString +='<img class="voteDownArrow" />';
-            probString +='</div>-->';
-            probString +='<div class="pTitle">'+title+'</div>';
-            probString +='<div class="pOptions">';
+        problem.client.addProblem = function (id, title, shortDate, firstName, submitterUserID) {
+            var probString = "";
+            probString += '<div class="problem new" style="display:none;" problemid="' + id + '">';
+            probString += '<div class="voteArrowsContainer">';
+            probString += '<!--<img class="voteUpArrow" />';
+            probString += '<img class="voteDownArrow" />';
+            probString += '</div>-->';
+            probString += '<div class="pTitle">' + title + '</div>';
+            probString += '<div class="pOptions">';
             probString += '<div>' + shortDate + '</div>';
             probString += '<div>' + firstName + '</div>';
             if (submitterUserID == currentUserID) {
                 probString += '<div class="deleteProblem" style="display:none;">[delete]</div>';
             }
-            probString +='</div>';
+            probString += '</div>';
             probString += '</div>';
             $(probString).prependTo('.problemContainer');
             $('.new').fadeIn(500, function () {
@@ -611,7 +638,7 @@ border-right: solid 1px #000;
                 $('.problemContent').removeAttr('contenteditable');
                 $('.editProblem').attr('disabled', 'disabled').text('someone is editing this');
             };
-            
+
         }
         problem.client.someoneHasStoppedEditing = function (userid, problemid) {
             //set attribute on the problem
@@ -647,15 +674,21 @@ border-right: solid 1px #000;
 <div class="problemContainer">
     @Html.Action("ProblemContainer", "Problem")
 </div>
+
 <div class="problemContentContainer">
-    <div class="editProblem" style="display:none;">edit</div>
-    <div class="problemContent" contenteditable="false" tabindex="1">
+    <div class="editProblem" style="display: none;">edit</div>
+    <!--
+    <div class="btn-toolbar" data-role="editor-toolbar"
+        data-target=".problemContent" style="z-index: 2; position: absolute;">
+        <a data-edit="bold">b</a>
+    </div>-->
+    <div id="editor" class="problemContent" contenteditable="false" tabindex="1">
     </div>
 </div>
 <div class="commentContainer">
 </div>
 <form id="commentSubmitContainer" class="commentSubmitContainer">
     <textarea id="chatContent"></textarea>
-    <input id="submitChat" type="button" value="enter"/>
+    <input id="submitChat" type="button" value="enter" />
 </form>
 @Html.Action("Submit", "Problem")

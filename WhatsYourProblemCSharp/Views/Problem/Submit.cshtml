@@ -5,6 +5,8 @@
     $(document).on('click', '.closeBox', function (e) {
         $(this).closest('.submitProblem-container').fadeOut(100);
         $('.submitProblem-cover').fadeOut(100);
+        $('#submitProblem-form input[name="relationship"]').val("");
+        $('#submitProblem-form input[name="relatedid"]').val("");
     });
     $(document).ready(function (e) {
         $container = $('.submitProblem-container');
@@ -24,32 +26,67 @@
     });
     function submitNewProblemForm() {
         $('.submitProblem-container > input').attr('disabled', 'disabled');
-        var data = {
-            title: $('.newProblemText').val()
-        };
-        var dataToPost = JSON.stringify(data);
-        $.ajax({
-            type: "POST",
-            url: "/Problem/Create",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: dataToPost,
-            success: function (id) {
-                if (id!=null) {
-                    $('.closeBox').trigger('click');
-                    ClearSubmitNewProblemContainer();
-                    $('.submitProblem-container > input').removeAttr('disabled');
-                    problem.server.addProblem(id)
-                } else {
-                    alert('server error');
-                }
-            },
-            error: function (ex) {
-                //communication error
-                alert('communication error');
-            },
+        var relationship = $('input[name="relationship"]').val();
+        var relatedid = $('input[name="relatedid"]').val();
+        if (relatedid != "" && relationship != "") {
+            var data = {
+                title: $('.newProblemText').val(),
+                relatedid: relatedid,
+                relationship: relationship,
+            };
+            var dataToPost = JSON.stringify(data);
+            $.ajax({
+                type: "POST",
+                url: "/Problem/CreateRelated",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: dataToPost,
+                success: function (id) {
+                    if (id != null) {
+                        $('.closeBox').trigger('click');
+                        ClearSubmitNewProblemContainer();
+                        $('.submitProblem-container > input').removeAttr('disabled');
+                        problem.server.addProblem(id)
+                    } else {
+                        alert('server error');
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    alert('communication error');
+                },
 
-        });
+            });
+        } else {
+            var data = {
+                title: $('.newProblemText').val(),
+            };
+                var dataToPost = JSON.stringify(data);
+            $.ajax({
+                type: "POST",
+                url: "/Problem/Create",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: dataToPost,
+                success: function (id) {
+                    if (id!=null) {
+                        $('.closeBox').trigger('click');
+                        ClearSubmitNewProblemContainer();
+                        $('.submitProblem-container > input').removeAttr('disabled');
+                        problem.server.addProblem(id)
+                    } else {
+                        alert('server error');
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    alert('communication error');
+                },
+
+            });
+            
+        }
+       
     }
     $(document).ready(function () {
         $('#submitProblem-form').validate({
@@ -150,6 +187,8 @@
             <input type="text" class="newProblemText" name="newProblemText" tabindex="-1"/>
         </div>
         <input type="submit" value="submit" />
+        <input type="hidden" name="relationship" value="" />
+        <input type="hidden" name="relatedid" value="" />
         <div class="closeBox">close</div>
     </form>
 </div>

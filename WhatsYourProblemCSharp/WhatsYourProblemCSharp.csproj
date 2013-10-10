@@ -346,6 +346,7 @@
     <Content Include="Views\Problem\Submit.cshtml" />
     <Content Include="Views\Problem\ProblemContainer.cshtml" />
     <Content Include="Views\Chat\GetChat.cshtml" />
+    <Content Include="Views\Problem\OnlineUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

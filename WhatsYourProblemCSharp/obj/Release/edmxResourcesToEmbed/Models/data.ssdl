@@ -33,7 +33,7 @@
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="1000" />
-    <Property Name="Content" Type="nvarchar" />
+    <Property Name="Content" Type="nvarchar(max)" />
     <Property Name="PostedDate" Type="datetime2" />
     <Property Name="PUserID" Type="uniqueidentifier" />
     <Property Name="Rating" Type="int" />

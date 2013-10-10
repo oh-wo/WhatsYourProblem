@@ -17,6 +17,8 @@ namespace WhatsYourProblemCSharp.Models
         public Problem()
         {
             this.ChatComments = new HashSet<ChatComment>();
+            this.Problem1 = new HashSet<Problem>();
+            this.Problems = new HashSet<Problem>();
         }
     
         public System.Guid ID { get; set; }
@@ -29,5 +31,7 @@ namespace WhatsYourProblemCSharp.Models
     
         public virtual ICollection<ChatComment> ChatComments { get; set; }
         public virtual PUser PUser { get; set; }
+        public virtual ICollection<Problem> Problem1 { get; set; }
+        public virtual ICollection<Problem> Problems { get; set; }
     }
 }

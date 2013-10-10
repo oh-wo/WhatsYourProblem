@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Browse";
 }
 @model WhatsYourProblemCSharp.Models.PUser
@@ -7,6 +9,7 @@
     .accountStuff {
         float: right;
         width: 200px;
+        clear:right;
     }
 
         .accountStuff > div {
@@ -22,37 +25,55 @@
             text-decoration: underline;
         }
     /*Problem stuff*/
-    .submitProblem {
-        float: left;
-        clear: left;
-        margin-left: 2.5%;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
-
-        .submitProblem:hover {
-            text-decoration: underline;
-        }
-
-    .problemContainer {
-width: 26%;
+.submitProblem {
 float: left;
 clear: left;
-margin-left: 2.5%;
-overflow-y: auto;
-overflow-x: hidden;
+margin-bottom: 10px;
+cursor: pointer;
+color: #fff;
+background-color: rgb(0, 112, 255);
+padding-left: 1%;
+padding-right: 1%;
+padding-bottom: 0.15%;
+margin-top: 0.5%;
 }
 
+        .submitProblem:hover {
+background-color: rgb(0, 47, 167);
+}
+        .problemContainer {
+float: left;
+clear: left;
+width: 25%;
+}
+    .problemContent {
+float: left;
+clear: left;
+margin-left: 0;
+width: 98%;
+height: 80%;
+padding: 1%;
+overflow-x: hidden;
+border-top: solid 1px #000;
+overflow-y: scroll;
+}
+    .problem:nth-child(even) {
+    background-color: #ccc;
+}
+.problem:nth-child(odd) {
+background-color: #DBDBDB;
+}
     .problem {
-        float: left;
-        clear: left;
-        margin-bottom: 1%;
-        width: 100%;
-    }
+float: left;
+clear: left;
+width: 100%;
+margin-bottom: 0px;
+padding: 1%;
+}
+    .problem.selectedProblem {
+background-color: #2DAABB;
+}
 
-    .selectedProblem > .pTitle {
-        font-weight: bold;
-    }
 
     .voteArrowsContainer {
         float: left;
@@ -134,31 +155,38 @@ overflow-x: hidden;
         margin-bottom: 7%;
         width: 90%;
     }
-
     .commentSubmitContainer {
-        float: right;
-        height: 10%;
-        position: relative;
-        clear: right;
-        width: 20%;
-    }
+float: right;
+width: 20%;
+position: relative;
+}
+    .commentSubmitContainer > textarea {
+height: 100%;
+width: 96%;
+resize: none;
+padding-left: 3%;
+margin: 0;
+overflow-y: auto;
+border: solid 1px #3C3C3C;
+overflow-x: hidden;
+}
 
-        .commentSubmitContainer > input[type="button"] {
-            background-color: #d3dce0;
-            border: 1px solid #787878;
-            cursor: pointer;
-            font-weight: 600;
-            padding: 7px;
-            width: auto;
-            position: absolute;
-            bottom: 1%;
-            right: 1%;
-            padding-top: 0;
-            padding-bottom: 0;
-            font-size: 1em;
-            margin-right: 0%;
-            opacity: 0.3;
-        }
+.commentSubmitContainer > input[type="button"] {
+background-color: #d3dce0;
+border: 1px solid #787878;
+cursor: pointer;
+font-weight: 600;
+padding: 7px;
+width: auto;
+position: absolute;
+bottom: -3%;
+right: 0%;
+padding-top: 0;
+padding-bottom: 0;
+font-size: 1em;
+margin-right: 0%;
+opacity: 0.3;
+}
 
             .commentSubmitContainer > input[type="button"]:hover {
                 opacity: 1;
@@ -170,11 +198,11 @@ overflow-x: hidden;
             resize: none;
             padding-left: 3%;
             margin: 0;
-            overflow-y:auto;
-            overflow-x:hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
-    .content {
+    .commentContainer  .content {
         background-color: #ccc;
         padding-left: 3%;
         font-size: 0.9em;
@@ -217,62 +245,117 @@ overflow-x: hidden;
         text-decoration: underline;
     }
 
-    .problemContentContainer {
-        position: relative;
-        float: left;
-        width: 50%;
-        height: 70%;
-        border: solid 1px #000;
-    }
+.problemContentContainer {
+position: relative;
+float: left;
+width: 50%;
+background-color: aliceblue;
+padding-left: 1%;
+height: 80%;
+display: block;
+}
 
     .editProblem {
-position: absolute;
-top: -21px;
-right: -1px;
-cursor: pointer;
-z-index: 1;
-background-color: #ccc;
-padding-left: 3px;
-padding-right: 3px;
-border-top: solid 1px #000;
-border-left: solid 1px #000;
-border-right: solid 1px #000;
-}
+        float:right;
+        cursor: pointer;
+        background-color: #ccc;
+        padding-left: 3px;
+        padding-right: 3px;
+        border-top: solid 1px #000;
+        border-left: solid 1px #000;
+        border-right: solid 1px #000;
+    }
+
         .editProblem[disabled="disabled"] {
-            cursor:default;
+            cursor: default;
         }
-        .editProblem[disabled="disabled"]:hover {
-            text-decoration: none;
-        }
+
+            .editProblem[disabled="disabled"]:hover {
+                text-decoration: none;
+            }
+
         .editProblem:hover {
             text-decoration: underline;
         }
 
-    .problemContent {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 98%;
-        height: 95%;
-        padding:1%;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
+
     .deleteProblem {
-        text-decoration:underline;
-        cursor:pointer;
+        text-decoration: underline;
+        cursor: pointer;
     }
+.subproblemContainer {
+float: left;
+clear: left;
+width: 100%;
+max-height: 100px;
+min-height: 10px;
+}
+    .subproblem {
+cursor: pointer;
+background-color: rgb(215, 252, 255);
+padding-left: 1%;
+float: left;
+padding-right: 1%;
+}
+        .subproblem:hover {
+background-color: rgb(132, 246, 255);
+}
+.parentproblemContainer {
+float: left;
+clear: left;
+max-height: 100px;
+text-overflow: ellipsis;
+width: 100%;
+}
+    .parentproblem {
+cursor: pointer;
+background-color: rgb(215, 252, 255);
+padding-left: 1%;
+float: left;
+padding-right: 1%;
+}
+.parentproblem:hover {
+background-color: rgb(132, 246, 255);
+}
+.addParentProblem {
+background-color: rgb(197, 255, 197);
+float: left;
+padding-left: 1%;
+padding-right: 1%;
+cursor: pointer;
+}
+.addParentProblem:hover {
+background-color: rgb(7, 192, 7);
+}
+.addSubProblem{
+background-color: rgb(197, 255, 197);
+float: left;
+padding-left: 1%;
+padding-right: 1%;
+}
+.addSubProblem:hover {
+background-color: rgb(7, 192, 7);
+}
 </style>
+<script src="~/Scripts/bootstrap-wysiwyg.js"></script>
 <script>
     //FORMATTING ETC
     $('body').css('height', $(window).height() + 'px');
     //PROBLEM MANAGEMENT
+    $(document).on('click', '.subproblem', function () {
+        //find the problem listed in the side
+        $('.problem[problemid="'+$(this).attr('problemid')+'"]').trigger('click');
+    });
+    $(document).on('click', '.parentproblem', function () {
+        //find the problem listed in the side
+        $('.problem[problemid="' + $(this).attr('problemid') + '"]').trigger('click');
+    });
     $(document).on('click', '.problem', function (e) {
 
         var $problem = $(this);
         var problemid = $problem.attr('problemid');
         var wasSelected = $problem.hasClass('selectedProblem');
-        
+
         var $oldSelectedProblem = $('.selectedProblem');
         var wasEditingOldSelectedProblem = $oldSelectedProblem.attr('editingid') == currentUserID;
         var oldProblemID = $oldSelectedProblem.attr('problemid');
@@ -293,8 +376,8 @@ border-right: solid 1px #000;
             chat.server.leaveGroup(problemid);
             ClearContent();
             ClearChat();
-            
-        }
+
+        }/*
         //this bit handles the table view etc.
         if ($oldSelectedProblem.length == 0) {
             //nothing was previously selected
@@ -313,7 +396,7 @@ border-right: solid 1px #000;
                 $('.commentSubmitContainer').css('display', 'none');
                 $('.problemContainer').animate({ "width": "90%" });
             }
-        }
+        }*/
     });
     $(document).on('click', '.editProblem', function (e) {
         $this = $(this);
@@ -334,6 +417,22 @@ border-right: solid 1px #000;
         $('.submitProblem-container').fadeIn(100);
         $('.submitProblem-cover').fadeIn(100);
         $('.newProblemText').focus();
+        $('#submitProblem-form input[name="relationship"]').val("");
+        $('#submitProblem-form input[name="relatedid"]').val("");
+    });
+    $(document).on('click', '.addParentProblem', function (e) {
+        $('.submitProblem-container').fadeIn(100);
+        $('.submitProblem-cover').fadeIn(100);
+        $('.newProblemText').focus();
+        $('#submitProblem-form input[name="relationship"]').val('parent');
+        $('#submitProblem-form input[name="relatedid"]').val($('.selectedProblem').attr('problemid'));
+    });
+    $(document).on('click', '.addSubProblem', function (e) {
+        $('.submitProblem-container').fadeIn(100);
+        $('.submitProblem-cover').fadeIn(100);
+        $('.newProblemText').focus();
+        $('#submitProblem-form input[name="relationship"]').val("subproblem");
+        $('#submitProblem-form input[name="relatedid"]').val($('.selectedProblem').attr('problemid'));
     });
     $(document).on('mouseenter', '.problem', function (e) {
         $(this).find('.deleteProblem').css('display', 'block');
@@ -362,7 +461,10 @@ border-right: solid 1px #000;
     });
     function LoadContent(problemID) {
         $('.editProblem').css('display', 'none');
+        $('.relationshipProblemContainer').css('display', 'none');
         $('.problemContent').text('loading...');
+        $('.subproblemContainer .subproblem').remove();
+        $('.parentproblemContainer .parentproblem').remove();
         var data = {
             problemID: problemID,
         };
@@ -375,12 +477,23 @@ border-right: solid 1px #000;
             data: dataToPost,
             success: function (a) {
                 if (a != 'failure') {
-                    $('.problemContent').html(a);
+                    $('.problemContent').html(a.Content);
+                    $subproblemContainer = $('.subproblemContainer');
+                    $parentproblemContainer = $('.parentproblemContainer');
+                    $(a.SubProblems).each(function (i, subproblem) {
+                        $('<div class="subproblem" problemid="'+subproblem.ID+'">'+subproblem.Title+'</div>').appendTo($subproblemContainer);
+                    });
+                    $(a.ParentProblems).each(function (i, parentproblem) {
+                        $('<div class="parentproblem" problemid="' + parentproblem.ID + '">' + parentproblem.Title + '</div>').appendTo($parentproblemContainer);
+                    });
+                    //who's editing etc
                     var editingID = $('.problem[problemid="' + problemID + '"]').attr('editingid');
                     if ((editingID != currentUserID) && editingID != null) {
                         $('.editProblem').css('display', 'block').text('someone is editing this').attr('disabled', 'disabled');
+                        $('.relationshipProblemContainer').css('display', 'block');
                     } else {
                         $('.editProblem').css('display', 'block').text('edit').removeAttr('disabled');
+                        $('.relationshipProblemContainer').css('display', 'block');
                     }
                 } else {
                     $('.problemContent').html('<div style="color:red;">Server error - getting problem content. This problem may no longer exist?</div>');
@@ -410,12 +523,12 @@ border-right: solid 1px #000;
                 if (a) {
                     //great
                 } else {
-                    alert('server error saving: '+problemTitle);
+                    alert('server error saving: ' + problemTitle);
                 }
             },
             error: function (ex) {
                 //communication error
-                alert('communication error saving:'+problemTitle+'- please check your connection');
+                alert('communication error saving:' + problemTitle + '- please check your connection');
             },
 
         });
@@ -476,8 +589,14 @@ border-right: solid 1px #000;
     }
     function ClearContent() {
         $('.problemContent').html("");
+        $('.subproblemContainer .subproblem').remove();
+        $('.parentproblemContainer .parentproblem').remove();
         $('.editProblem').css('display', 'none');
+        $('.relationshipProblemContainer').css('display', 'none');
     }
+    $(document).ready(function () {
+      //  $('.problemContent').wysiwyg();
+    });
     //AUTHENTICATION
     $(document).on('click', '.logoff', function (e) {
         $('.logoff').attr('disabled', 'disabled').text('logging off...');
@@ -520,7 +639,7 @@ border-right: solid 1px #000;
             },
             error: function (ex) {
                 //communication error
-               // $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
+                // $('.problemContent').html('<div style="color:red;">Communication error getting problem content. Please check your connection and try again.</div>');
             },
 
         });
@@ -530,7 +649,7 @@ border-right: solid 1px #000;
         $('#submitChat').attr('disabled', 'disabled');
         var data = {
             problemID: problemID,
-            content : content,
+            content: content,
         };
         var dataToPost = JSON.stringify(data);
         $.ajax({
@@ -583,12 +702,12 @@ border-right: solid 1px #000;
     var chat;
     $(function () {
         chat = $.connection.chatHub;
-        chat.client.addMessage = function (posterid,name, message,datetime) {
+        chat.client.addMessage = function (posterid, name, message, datetime) {
             var chatMessage = '';
-            chatMessage += '<div class="comment '+(posterid==currentUserID?'user':'notUser')+'">';
-            chatMessage +='<div class="colourBar"><span>'+name+'</span></div>';
-            chatMessage +='<div class="content">'+message+'</div>';
-            chatMessage +='<div class="messageDetails"><span class="messageDate">'+datetime+'</span></div>';
+            chatMessage += '<div class="comment ' + (posterid == currentUserID ? 'user' : 'notUser') + '">';
+            chatMessage += '<div class="colourBar"><span>' + name + '</span></div>';
+            chatMessage += '<div class="content">' + message + '</div>';
+            chatMessage += '<div class="messageDetails"><span class="messageDate">' + datetime + '</span></div>';
             chatMessage += '</div>';
             $(chatMessage).appendTo('.commentContainer')
             $('.commentContainer').scrollTop(999999);
@@ -601,21 +720,21 @@ border-right: solid 1px #000;
     var problem;
     $(function () {
         problem = $.connection.problemHub;
-        problem.client.addProblem = function (id,title,shortDate,firstName,submitterUserID) {
-            var probString ="";
-            probString +='<div class="problem new" style="display:none;" problemid="'+id+'">';
-            probString +='<div class="voteArrowsContainer">';
-            probString +='<!--<img class="voteUpArrow" />';
-            probString +='<img class="voteDownArrow" />';
-            probString +='</div>-->';
-            probString +='<div class="pTitle">'+title+'</div>';
-            probString +='<div class="pOptions">';
+        problem.client.addProblem = function (id, title, shortDate, firstName, submitterUserID) {
+            var probString = "";
+            probString += '<div class="problem new" style="display:none;" problemid="' + id + '">';
+            probString += '<div class="voteArrowsContainer">';
+            probString += '<!--<img class="voteUpArrow" />';
+            probString += '<img class="voteDownArrow" />';
+            probString += '</div>-->';
+            probString += '<div class="pTitle">' + title + '</div>';
+            probString += '<div class="pOptions">';
             probString += '<div>' + shortDate + '</div>';
             probString += '<div>' + firstName + '</div>';
             if (submitterUserID == currentUserID) {
                 probString += '<div class="deleteProblem" style="display:none;">[delete]</div>';
             }
-            probString +='</div>';
+            probString += '</div>';
             probString += '</div>';
             $(probString).prependTo('.problemContainer');
             $('.new').fadeIn(500, function () {
@@ -630,7 +749,7 @@ border-right: solid 1px #000;
                 $('.problemContent').removeAttr('contenteditable');
                 $('.editProblem').attr('disabled', 'disabled').text('someone is editing this');
             };
-            
+
         }
         problem.client.someoneHasStoppedEditing = function (userid, problemid) {
             //set attribute on the problem
@@ -651,6 +770,32 @@ border-right: solid 1px #000;
             $('.problem[problemid="' + problemid + '"]').fadeOut(500);
 
         }
+        /*
+        problem.client.checkWhosOnline = function () {
+            $.ajax({
+                type: "POST",
+                url: "/Problem/WhosOnline",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (a) {
+                    if (a != null) {
+                        var strOnlineUsers = "";
+                        $(a).each(function (i, firstName) {
+                            strOnlineUsers += firstName + " ";
+                        });
+                        $('.onlineUsers >.content').text(strOnlineUsers);
+                    } else {
+                        //server error
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    
+                },
+
+            });
+        }
+        */
         $.connection.hub.start();
     })
 </script>
@@ -660,21 +805,35 @@ border-right: solid 1px #000;
 
 </div>
 <div class="submitProblem">
-    Submit a new problem
+    New Idea
 </div>
 
 <div class="problemContainer">
     @Html.Action("ProblemContainer", "Problem")
 </div>
+
 <div class="problemContentContainer">
-    <div class="editProblem" style="display:none;">edit</div>
-    <div class="problemContent" contenteditable="false" tabindex="1">
+    <div class="parentproblemContainer relationshipProblemContainer" style="display:none;">
+        <div class="label">Parent-problems: </div>
+        <div class="addParentProblem">+ Add</div>
+    </div>
+    <div class="editProblem" style="display: none;">edit</div>
+    <!--
+    <div class="btn-toolbar" data-role="editor-toolbar"
+        data-target=".problemContent" style="z-index: 2; position: absolute;">
+        <a data-edit="bold">b</a>
+    </div>-->
+    <div id="editor" class="problemContent" contenteditable="false" tabindex="1">
+    </div>
+    <div class="subproblemContainer relationshipProblemContainer"  style="display:none;">
+        <div class="label">Sub-problems: </div>
+        <div class="addSubProblem">+ Add</div>
     </div>
 </div>
 <div class="commentContainer">
 </div>
 <form id="commentSubmitContainer" class="commentSubmitContainer">
     <textarea id="chatContent"></textarea>
-    <input id="submitChat" type="button" value="enter"/>
+    <input id="submitChat" type="button" value="enter" />
 </form>
 @Html.Action("Submit", "Problem")
