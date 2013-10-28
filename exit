@@ -1,0 +1,158 @@
+[33mcommit 1a1e9158b11eea8dafcb9467ef783d20c162c26a[m
+Merge: a7fd97c 17c5e93
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 28 21:38:24 2013 +1300
+
+    Merge branch 'owen-asusFix' of https://github.com/oh-wo/WhatsYourProblem into owen-asusFix
+    
+    Conflicts:
+    	WhatsYourProblemCSharp.v11.suo
+    	WhatsYourProblemCSharp.v12.suo
+    	WhatsYourProblemCSharp/Controllers/ProblemController.cs
+    	WhatsYourProblemCSharp/Models/Chat.cs
+    	WhatsYourProblemCSharp/Properties/PublishProfiles/TheProblem.org.pubxml.user
+    	WhatsYourProblemCSharp/Views/Home/Browse.cshtml
+    	WhatsYourProblemCSharp/Views/Problem/Submit.cshtml
+    	WhatsYourProblemCSharp/bin/WhatsYourProblemCSharp.dll
+    	WhatsYourProblemCSharp/bin/WhatsYourProblemCSharp.pdb
+    	WhatsYourProblemCSharp/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+    	WhatsYourProblemCSharp/obj/Debug/WhatsYourProblemCSharp.dll
+    	WhatsYourProblemCSharp/obj/Debug/WhatsYourProblemCSharp.pdb
+    	WhatsYourProblemCSharp/obj/Release/Package/PackageTmp/Models/data.edmx.diagram
+    	WhatsYourProblemCSharp/obj/Release/Package/PackageTmp/Views/Home/Browse.cshtml
+    	WhatsYourProblemCSharp/obj/Release/Package/PackageTmp/bin/WhatsYourProblemCSharp.dll
+    	WhatsYourProblemCSharp/obj/Release/TempPE/Models.data.Designer.cs.dll
+    	WhatsYourProblemCSharp/obj/Release/TempPE/Models.data.cs.dll
+    	WhatsYourProblemCSharp/obj/Release/WhatsYourProblemCSharp.dll
+    	WhatsYourProblemCSharp/obj/Release/WhatsYourProblemCSharp.pdb
+
+[33mcommit a7fd97c9f3d4b7f513fca5d720f68048675968c1[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 28 21:37:04 2013 +1300
+
+    ahh!
+
+[33mcommit c72bdc4206ac59b57f7ea6b51606457a9a570ee7[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 28 20:09:38 2013 +1300
+
+    unsure
+
+[33mcommit 1ea026c5aaa0cd2f20dd6d72faab8b8a21142e36[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 28 19:45:41 2013 +1300
+
+    rolled back
+
+[33mcommit 17c5e93a2a76b87b85764032e52f423e32740d09[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Thu Oct 10 21:00:43 2013 +1300
+
+    added subgroups, colours etc
+
+[33mcommit b5aebf71bea2a8df75a999eda10b078db379225c[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Wed Oct 9 10:42:42 2013 +1300
+
+    meh
+
+[33mcommit 9b70854bf48c7defca4921a99edf6418ec6197fb[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Tue Oct 8 16:47:36 2013 +1300
+
+    playing around with sliding to the left etc
+    
+    *to revert, remove 6 lines of code from problem select function
+
+[33mcommit 9539e37e2bc954e7068d0d26fd288dd9ab5efd6b[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Tue Oct 8 15:11:08 2013 +1300
+
+    chat, problem management work
+    
+    fixed bugs:
+    * saves problems when you navigate away to another problem.
+    * logs you out when you navigate away to another problem.
+    need to implement:
+    * log you out when you leave problem
+    * show whos viewing the same project as you
+    
+    added functionality
+    *ctrl-s to save
+    *enter to submit chat comments
+    
+    probably some others; it got a bit messy there for a while
+
+[33mcommit fb1da7c9ff76a09bb0fe36e2aeefa19c41c74b6b[m
+Merge: 85f24c7 6e75e87
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 12:20:44 2013 +1300
+
+    ---
+
+[33mcommit 85f24c7bcf45bc13287d8fe7167ec282b17d91c2[m
+Merge: 93ebee1 89bd723
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 12:15:28 2013 +1300
+
+    nuddin
+
+[33mcommit 6e75e87d4d4eb616b69062f3bde20edae9771afd[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 11:14:39 2013 +1300
+
+    added submit problem
+    
+    also now the problems displayed are actually saved in the db
+
+[33mcommit d3a7fb5f6c8c18b4025163eff0bbba5d0ed37743[m
+Merge: 89bd723 93ebee1
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 09:50:13 2013 +1300
+
+    meh2
+
+[33mcommit 89bd72339c212d0054c6c3f049fe45af3385a351[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 09:35:42 2013 +1300
+
+    meh
+
+[33mcommit 93ebee124f9c65ef7b5710ec855a032c7303722d[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Mon Oct 7 09:34:16 2013 +1300
+
+    bits and pieces, nothing major
+
+[33mcommit abf54c5222df848646915ef43e4424b575934ec7[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Sun Oct 6 00:41:32 2013 +1300
+
+    Made c# project
+    
+    Haven't updated in a while.
+    I have
+    * uploaded a basic project
+    * created a homepage "index"
+    * created a browsing page "browse"
+    * implemented a login system where all registration/login is handled on
+    the index page, log off is handled on the browse page
+    * partially implemented real time chat using signalR, with a different
+    group for each problem topic. Haven't been able to fully implement this
+    as am waiting on other parts to be setup. (chat with different groups
+    works, hasn't been linked to the problems yet)
+    * have setup a database with 3 tables: users, problems and chat comments
+    
+    Next work needed:
+    * 'crud' commands for problems at both db and user interface level
+    * 'crud' commands for chat comments at db level, user interface is
+    pretty well setup
+    * display of problems in a content editing pane in the center of the
+    page
+    * integration with our preferred editor
+
+[33mcommit f0aa45c3468456343b63bcb49650145e059d8725[m
+Author: Owen Bodley <obodley@gmail.com>
+Date:   Wed Oct 2 17:55:13 2013 +1300
+
+    copied basic rails project across
