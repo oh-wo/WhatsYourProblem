@@ -176,7 +176,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:59:27</publishTime>
     </File>
     <File Include="bin/WhatsYourProblemCSharp.dll">
+<<<<<<< HEAD
       <publishTime>10/11/2013 23:38:03</publishTime>
+=======
+      <publishTime>10/10/2013 10:22:46</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="bin/zh-Hans/Microsoft.Data.Edm.resources.dll">
       <publishTime>10/03/2013 15:59:35</publishTime>
@@ -200,7 +204,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/11/2013 23:15:50</publishTime>
     </File>
     <File Include="Content/Site.css">
+<<<<<<< HEAD
       <publishTime>10/11/2013 19:24:50</publishTime>
+=======
+      <publishTime>10/08/2013 16:46:46</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/03/2013 15:59:15</publishTime>
@@ -371,7 +379,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Models/data.edmx.diagram">
+<<<<<<< HEAD
       <publishTime>10/10/2013 18:17:14</publishTime>
+=======
+      <publishTime>10/10/2013 10:15:01</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="packages.config">
       <publishTime>10/05/2013 21:59:50</publishTime>
@@ -437,28 +449,44 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Home/Browse.cshtml">
+<<<<<<< HEAD
       <publishTime>10/11/2013 23:37:49</publishTime>
+=======
+      <publishTime>10/10/2013 10:20:46</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
+<<<<<<< HEAD
       <publishTime>10/11/2013 19:29:43</publishTime>
     </File>
     <File Include="Views/Problem/OnlineUsers.cshtml">
       <publishTime>10/10/2013 13:04:47</publishTime>
+=======
+      <publishTime>10/09/2013 11:19:34</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="Views/Problem/ProblemContainer.cshtml">
       <publishTime>10/09/2013 11:19:34</publishTime>
     </File>
     <File Include="Views/Problem/Submit.cshtml">
+<<<<<<< HEAD
       <publishTime>10/11/2013 19:19:49</publishTime>
+=======
+      <publishTime>10/09/2013 11:19:34</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
+<<<<<<< HEAD
       <publishTime>10/11/2013 23:12:41</publishTime>
+=======
+      <publishTime>10/09/2013 11:19:34</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>10/03/2013 15:58:39</publishTime>
@@ -470,7 +498,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2013 15:58:39</publishTime>
     </File>
     <File Include="Web.config">
+<<<<<<< HEAD
       <publishTime>10/11/2013 19:30:08</publishTime>
+=======
+      <publishTime>10/10/2013 10:22:56</publishTime>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     </File>
   </ItemGroup>
 </Project>

@@ -29,12 +29,19 @@
 
     });
     function submitNewProblemForm() {
+<<<<<<< HEAD
         $('.submitProblem-container input').attr('disabled', 'disabled');
+=======
+        $('.submitProblem-container > input').attr('disabled', 'disabled');
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         var relationship = $('input[name="relationship"]').val();
         var relatedid = $('input[name="relatedid"]').val();
         if (relatedid != "" && relationship != "") {
             var data = {
+<<<<<<< HEAD
                 problemid: $('.newProblemText').attr('problemid'),
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                 title: $('.newProblemText').val(),
                 relatedid: relatedid,
                 relationship: relationship,
@@ -50,6 +57,7 @@
                     if (id != null) {
                         $('.closeBox').trigger('click');
                         ClearSubmitNewProblemContainer();
+<<<<<<< HEAD
                         $('.submitProblem-container input').removeAttr('disabled');
                         problem.server.addProblem(id);
                         problem.server.aRelationshipHasBeenCreated(relatedid, id, relationship);
@@ -78,6 +86,42 @@
                     if (id != null) {
                         $('.closeBox').trigger('click');
                         ClearSubmitNewProblemContainer();
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
+                        $('.submitProblem-container > input').removeAttr('disabled');
+                        problem.server.addProblem(id)
+                    } else {
+                        alert('server error');
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    alert('communication error');
+                },
+<<<<<<< HEAD
+
+            });
+
+        }
+
+=======
+
+            });
+        } else {
+            var data = {
+                title: $('.newProblemText').val(),
+            };
+                var dataToPost = JSON.stringify(data);
+            $.ajax({
+                type: "POST",
+                url: "/Problem/Create",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: dataToPost,
+                success: function (id) {
+                    if (id!=null) {
+                        $('.closeBox').trigger('click');
+                        ClearSubmitNewProblemContainer();
                         $('.submitProblem-container > input').removeAttr('disabled');
                         problem.server.addProblem(id)
                     } else {
@@ -90,9 +134,10 @@
                 },
 
             });
-
+            
         }
-
+       
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     }
     $(document).ready(function () {
         $('#submitProblem-form').validate({
@@ -208,6 +253,10 @@
             </div>
             <input type="submit" value="submit" />
         </div>
+<<<<<<< HEAD
+=======
+        <input type="submit" value="submit" />
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         <input type="hidden" name="relationship" value="" />
         <input type="hidden" name="relatedid" value="" />
         <div class="closeBox">close</div>

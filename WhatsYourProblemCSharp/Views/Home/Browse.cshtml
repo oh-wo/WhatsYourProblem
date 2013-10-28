@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Browse";
 }
 @model WhatsYourProblemCSharp.Models.PUser
@@ -39,6 +41,7 @@ margin-top: 0.5%;
         .submitProblem:hover {
 background-color: rgb(0, 47, 167);
 }
+<<<<<<< HEAD
 .problemContainer {
 float: left;
 clear: left;
@@ -46,6 +49,12 @@ width: 25%;
 overflow-x: hidden;
 overflow-y: auto;
 max-height: 80%;
+=======
+        .problemContainer {
+float: left;
+clear: left;
+width: 25%;
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
 }
     .problemContent {
 float: left;
@@ -283,6 +292,7 @@ display: block;
     .deleteProblem {
         text-decoration: underline;
         cursor: pointer;
+<<<<<<< HEAD
     }
 .subproblemContainer {
 float: left;
@@ -358,7 +368,62 @@ background-color: #000;
 }
     .visible {
         display: block;
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     }
+.subproblemContainer {
+float: left;
+clear: left;
+width: 100%;
+max-height: 100px;
+min-height: 10px;
+}
+    .subproblem {
+cursor: pointer;
+background-color: rgb(215, 252, 255);
+padding-left: 1%;
+float: left;
+padding-right: 1%;
+}
+        .subproblem:hover {
+background-color: rgb(132, 246, 255);
+}
+.parentproblemContainer {
+float: left;
+clear: left;
+max-height: 100px;
+text-overflow: ellipsis;
+width: 100%;
+}
+    .parentproblem {
+cursor: pointer;
+background-color: rgb(215, 252, 255);
+padding-left: 1%;
+float: left;
+padding-right: 1%;
+}
+.parentproblem:hover {
+background-color: rgb(132, 246, 255);
+}
+.addParentProblem {
+background-color: rgb(197, 255, 197);
+float: left;
+padding-left: 1%;
+padding-right: 1%;
+cursor: pointer;
+}
+.addParentProblem:hover {
+background-color: rgb(7, 192, 7);
+}
+.addSubProblem{
+background-color: rgb(197, 255, 197);
+float: left;
+padding-left: 1%;
+padding-right: 1%;
+}
+.addSubProblem:hover {
+background-color: rgb(7, 192, 7);
+}
 </style>
 <script src="~/Scripts/bootstrap-wysiwyg.js"></script>
 <script>
@@ -400,7 +465,30 @@ background-color: #000;
             ClearContent();
             ClearChat();
 
+<<<<<<< HEAD
         }
+=======
+        }/*
+        //this bit handles the table view etc.
+        if ($oldSelectedProblem.length == 0) {
+            //nothing was previously selected
+            $('.problemContainer').animate({ "width": "26%" }, function () {
+                $('.problemContentContainer').css('display', 'block');
+                $('.commentContainer').css('display', 'block');
+                $('.commentSubmitContainer').css('display', 'block');
+            });
+            
+        } else {
+            //something was previously selected
+            if ($('.selectedProblem').length==0) {
+                //but nothing is selected now
+                $('.problemContentContainer').css('display', 'none');
+                $('.commentContainer').css('display', 'none');
+                $('.commentSubmitContainer').css('display', 'none');
+                $('.problemContainer').animate({ "width": "90%" });
+            }
+        }*/
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     });
     $(document).on('click', '.editProblem', function (e) {
         $this = $(this);
@@ -425,7 +513,10 @@ background-color: #000;
         $('.newProblemText').focus();
         $('#submitProblem-form input[name="relationship"]').val("");
         $('#submitProblem-form input[name="relatedid"]').val("");
+<<<<<<< HEAD
         $('.newProblemText').autocomplete('destroy').removeAttr('problemid').val('');
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     });
     $(document).on('click', '.addParentProblem', function (e) {
         $('.submitProblem-container').fadeIn(100);
@@ -433,6 +524,7 @@ background-color: #000;
         $('.newProblemText').focus();
         $('#submitProblem-form input[name="relationship"]').val('parent');
         $('#submitProblem-form input[name="relatedid"]').val($('.selectedProblem').attr('problemid'));
+<<<<<<< HEAD
         $('.newProblemText').autocomplete('destroy').removeAttr('problemid').val('');
         $('.newProblemText').autocomplete({
             source: function (request, response) {
@@ -463,6 +555,8 @@ background-color: #000;
                 }
             },
         });
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     });
     $(document).on('click', '.addSubProblem', function (e) {
         $('.submitProblem-container').fadeIn(100);
@@ -470,6 +564,7 @@ background-color: #000;
         $('.newProblemText').focus();
         $('#submitProblem-form input[name="relationship"]').val("subproblem");
         $('#submitProblem-form input[name="relatedid"]').val($('.selectedProblem').attr('problemid'));
+<<<<<<< HEAD
         $('.newProblemText').autocomplete('destroy').removeAttr('problemid').val('');
         $('.newProblemText').autocomplete({
             source: function (request, response) {
@@ -515,6 +610,8 @@ background-color: #000;
                 CancelRelationship($parentProblem.attr('problemid'), $('.selectedProblem').attr('problemid'));
             }
         }
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     });
     $(document).on('mouseenter', '.problem', function (e) {
         $(this).find('.deleteProblem').css('display', 'block');
@@ -563,10 +660,17 @@ background-color: #000;
                     $subproblemContainer = $('.subproblemContainer');
                     $parentproblemContainer = $('.parentproblemContainer');
                     $(a.SubProblems).each(function (i, subproblem) {
+<<<<<<< HEAD
                         $('<div class="subproblem" problemid="'+subproblem.ID+'"><div class="title">'+subproblem.Title+'</div><div class="close">x</div></div>').appendTo($subproblemContainer);
                     });
                     $(a.ParentProblems).each(function (i, parentproblem) {
                         $('<div class="parentproblem" problemid="' + parentproblem.ID + '"><div class="title">' + parentproblem.Title + '</div><div class="close">x</div></div>').appendTo($parentproblemContainer);
+=======
+                        $('<div class="subproblem" problemid="'+subproblem.ID+'">'+subproblem.Title+'</div>').appendTo($subproblemContainer);
+                    });
+                    $(a.ParentProblems).each(function (i, parentproblem) {
+                        $('<div class="parentproblem" problemid="' + parentproblem.ID + '">' + parentproblem.Title + '</div>').appendTo($parentproblemContainer);
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                     });
                     //who's editing etc
                     var editingID = $('.problem[problemid="' + problemID + '"]').attr('editingid');
@@ -703,7 +807,11 @@ background-color: #000;
         $('.relationshipProblemContainer').css('display', 'none');
     }
     $(document).ready(function () {
+<<<<<<< HEAD
        $('.problemContent').wysiwyg();
+=======
+      //  $('.problemContent').wysiwyg();
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     });
     //AUTHENTICATION
     $(document).on('click', '.logoff', function (e) {
@@ -834,6 +942,7 @@ background-color: #000;
     $(function () {
         problem = $.connection.problemHub;
         problem.client.addProblem = function (id, title, shortDate, firstName, submitterUserID) {
+<<<<<<< HEAD
             if ($($('.problem[problemid="' + id + '"]')[0]).length == 0) {
                 var probString = "";
                 probString += '<div class="problem new" style="display:none;" problemid="' + id + '">';
@@ -855,6 +964,27 @@ background-color: #000;
                     $('.new').removeClass('new');
                 });
             };
+=======
+            var probString = "";
+            probString += '<div class="problem new" style="display:none;" problemid="' + id + '">';
+            probString += '<div class="voteArrowsContainer">';
+            probString += '<!--<img class="voteUpArrow" />';
+            probString += '<img class="voteDownArrow" />';
+            probString += '</div>-->';
+            probString += '<div class="pTitle">' + title + '</div>';
+            probString += '<div class="pOptions">';
+            probString += '<div>' + shortDate + '</div>';
+            probString += '<div>' + firstName + '</div>';
+            if (submitterUserID == currentUserID) {
+                probString += '<div class="deleteProblem" style="display:none;">[delete]</div>';
+            }
+            probString += '</div>';
+            probString += '</div>';
+            $(probString).prependTo('.problemContainer');
+            $('.new').fadeIn(500, function () {
+                $('.new').removeClass('new');
+            });
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         }
         problem.client.someoneHasStartedEditing = function (userid, problemid) {
             //set attribute on the problem
@@ -885,6 +1015,7 @@ background-color: #000;
             $('.problem[problemid="' + problemid + '"]').fadeOut(500);
 
         }
+<<<<<<< HEAD
         problem.client.removeRelationship = function (parentid, childid) {
             var $selectedProblem = $('.selectedProblem');
             if ($($selectedProblem[0]).length > 0) {
@@ -921,6 +1052,8 @@ background-color: #000;
                 //no problem is selected, don't need to do anything.
             }
         }
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         /*
         problem.client.checkWhosOnline = function () {
             $.ajax({
@@ -1069,6 +1202,7 @@ background-color: #000;
 
 <div class="problemContentContainer">
     <div class="parentproblemContainer relationshipProblemContainer" style="display:none;">
+<<<<<<< HEAD
         <div class="xlabel">Parent-problems: </div>
         <div class="addParentProblem">+ Add</div>
     </div>
@@ -1133,6 +1267,21 @@ background-color: #000;
          
     <div class="subproblemContainer relationshipProblemContainer"  style="display:none;">
         <div class="xlabel">Sub-problems: </div>
+=======
+        <div class="label">Parent-problems: </div>
+        <div class="addParentProblem">+ Add</div>
+    </div>
+    <div class="editProblem" style="display: none;">edit</div>
+    <!--
+    <div class="btn-toolbar" data-role="editor-toolbar"
+        data-target=".problemContent" style="z-index: 2; position: absolute;">
+        <a data-edit="bold">b</a>
+    </div>-->
+    <div id="editor" class="problemContent" contenteditable="false" tabindex="1">
+    </div>
+    <div class="subproblemContainer relationshipProblemContainer"  style="display:none;">
+        <div class="label">Sub-problems: </div>
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         <div class="addSubProblem">+ Add</div>
     </div>
 </div>

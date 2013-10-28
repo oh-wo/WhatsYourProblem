@@ -50,13 +50,18 @@ namespace WhatsYourProblemCSharp.Controllers
         }
 
         [HttpPost]
+<<<<<<< HEAD
         public JsonResult CreateRelated(string title, Guid? problemid, Guid? relatedid, string relationship)
+=======
+        public JsonResult CreateRelated(string title, Guid relatedid, string relationship)
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         {
             Guid? id = null;
             try
             {
                 using (PhotonFactoryEntities db = new PhotonFactoryEntities())
                 {
+<<<<<<< HEAD
                     Problem prob = new Problem();
                     if (problemid == null)
                     {
@@ -77,16 +82,35 @@ namespace WhatsYourProblemCSharp.Controllers
                         //problem is already specified, so use it.
                         prob = db.Problems.FirstOrDefault(p => p.ID == problemid);
                     };
+=======
+                    Problem prob = new Problem()
+                    {
+                        ID = Guid.NewGuid(),
+                        Title = title,
+                        PostedDate = DateTime.UtcNow,
+                        PUserID = new Guid(User.Identity.Name),
+                        Rating = 0,
+                    };
+                    db.Problems.Add(prob);
+                    db.SaveChanges();
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                     Problem relatedProblem = db.Problems.FirstOrDefault(p => p.ID == relatedid);
                     if (relatedProblem != null)
                     {
                         switch (relationship)
                         {
                             case "subproblem":
+<<<<<<< HEAD
                                 relatedProblem.Problems.Add(prob);
                                 break;
                             case "parent":
                                 prob.Problems.Add(relatedProblem);
+=======
+                                prob.Problems.Add(relatedProblem);
+                                break;
+                            case "parent":
+                                relatedProblem.Problems.Add(prob);
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                                 break;
                         }
                     }
@@ -108,7 +132,11 @@ namespace WhatsYourProblemCSharp.Controllers
             List<Problem> problems = new List<Problem>();
             using (PhotonFactoryEntities db = new PhotonFactoryEntities())
             {
+<<<<<<< HEAD
                 problems = db.Problems.Include("PUser").OrderByDescending(p => p.PostedDate).ToList();
+=======
+                problems = db.Problems.Include("PUser").Take(10).OrderByDescending(p=>p.PostedDate).ToList();
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
             }
             return View(problems);
         }
@@ -127,6 +155,7 @@ namespace WhatsYourProblemCSharp.Controllers
                     prob = db.Problems.AsNoTracking().Include("Problems").AsNoTracking().FirstOrDefault(p => p.ID == problemID);
                     List<Problem> ParentProblems = db.Problems.Where(p => p.Problems.Any(sp => sp.ID == problemID)).ToList();
                     foreach (Problem problem in prob.Problems)
+<<<<<<< HEAD
                     {
                         GotContent gC = new GotContent()
                         {
@@ -147,6 +176,26 @@ namespace WhatsYourProblemCSharp.Controllers
 
                     }
 
+=======
+                    {
+                        GotContent gC = new GotContent(){
+                            Title = problem.Title,
+                            ID = problem.ID,
+                        };
+                        subProblems.Add(gC);
+
+                    }
+                    foreach (Problem problem in ParentProblems)
+                    {
+                        GotContent gC = new GotContent(){
+                            Title = problem.Title,
+                            ID = problem.ID,
+                        };
+                        parentProblems.Add(gC);
+
+                    }
+                    
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                 }
             }
             catch (Exception ex)
@@ -154,7 +203,11 @@ namespace WhatsYourProblemCSharp.Controllers
 
             }
 
+<<<<<<< HEAD
             return Json(new { Content = prob.Content, SubProblems = subProblems, ParentProblems = parentProblems });
+=======
+            return Json(new { Content = prob.Content, SubProblems = subProblems, ParentProblems = parentProblems});
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         }
         public class GotContent
         {
@@ -196,7 +249,11 @@ namespace WhatsYourProblemCSharp.Controllers
                 {
                     Problem prob = db.Problems.FirstOrDefault(p => p.ID == problemID);
                     List<ChatComment> chatComments = db.ChatComments.Where(c => c.ProblemID == problemID).ToList();
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                     if (prob != null)
                     {
                         foreach (ChatComment chat in chatComments.ToList())
@@ -206,16 +263,22 @@ namespace WhatsYourProblemCSharp.Controllers
                         foreach (Problem subproblem in prob.Problems.ToList())
                         {
                             prob.Problems.Remove(subproblem);
+<<<<<<< HEAD
 
                             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProblemTime>();
                             hubContext.Clients.All.removeRelationship(problemID, subproblem.ID);
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                         }
                         foreach (Problem parentProblem in db.Problems.Where(p => p.Problems.Any(sp => sp.ID == problemID)).ToList())
                         {
                             parentProblem.Problems.Remove(prob);
+<<<<<<< HEAD
 
                             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProblemTime>();
                             hubContext.Clients.All.removeRelationship(parentProblem.ID, problemID);
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                         }
                         db.Problems.Remove(prob);
                         db.SaveChanges();
@@ -254,6 +317,7 @@ namespace WhatsYourProblemCSharp.Controllers
             return Json(onlineNames);
         }
 
+<<<<<<< HEAD
         [HttpPost]
         public JsonResult CancelRelationship(Guid parentid, Guid childid)
         {
@@ -315,6 +379,8 @@ namespace WhatsYourProblemCSharp.Controllers
             public Guid childid { get; set; }
         }
 
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         public ActionResult OnlineUsers()
         {
             List<PUser> onlineUsers = new List<PUser>();
