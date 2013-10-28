@@ -28,6 +28,7 @@
     <EntitySetMapping Name="PUsers">
       <EntityTypeMapping TypeName="PhotonFactoryModel.PUser">
         <MappingFragment StoreEntitySet="PUser">
+          <ScalarProperty Name="Online" ColumnName="Online" />
           <ScalarProperty Name="FailedPasswordCount" ColumnName="FailedPasswordCount" />
           <ScalarProperty Name="EmailVerified" ColumnName="EmailVerified" />
           <ScalarProperty Name="Created" ColumnName="Created" />
@@ -41,5 +42,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="ProblemRelationships" TypeName="PhotonFactoryModel.ProblemRelationships" StoreEntitySet="ProblemRelationships">
+      <EndProperty Name="Problem1">
+        <ScalarProperty Name="ID" ColumnName="ProblemID" />
+      </EndProperty>
+      <EndProperty Name="Problem">
+        <ScalarProperty Name="ID" ColumnName="ParentID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -3,6 +3,7 @@
   <EntityContainer Name="PhotonFactoryModelStoreContainer">
     <EntitySet Name="ChatComments" EntityType="PhotonFactoryModel.Store.ChatComments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Problem" EntityType="PhotonFactoryModel.Store.Problem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProblemRelationships" EntityType="PhotonFactoryModel.Store.ProblemRelationships" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PUser" EntityType="PhotonFactoryModel.Store.PUser" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK__ChatComme__Probl__164452B1" Association="PhotonFactoryModel.Store.FK__ChatComme__Probl__164452B1">
       <End Role="Problem" EntitySet="Problem" />
@@ -15,6 +16,14 @@
     <AssociationSet Name="FK__Problem__PUserID__1273C1CD" Association="PhotonFactoryModel.Store.FK__Problem__PUserID__1273C1CD">
       <End Role="PUser" EntitySet="PUser" />
       <End Role="Problem" EntitySet="Problem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProblemRe__Paren__1A14E395" Association="PhotonFactoryModel.Store.FK__ProblemRe__Paren__1A14E395">
+      <End Role="Problem" EntitySet="Problem" />
+      <End Role="ProblemRelationships" EntitySet="ProblemRelationships" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProblemRe__Probl__1920BF5C" Association="PhotonFactoryModel.Store.FK__ProblemRe__Probl__1920BF5C">
+      <End Role="Problem" EntitySet="Problem" />
+      <End Role="ProblemRelationships" EntitySet="ProblemRelationships" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="ChatComments">
@@ -33,11 +42,19 @@
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="1000" />
-    <Property Name="Content" Type="nvarchar" />
+    <Property Name="Content" Type="nvarchar(max)" />
     <Property Name="PostedDate" Type="datetime2" />
     <Property Name="PUserID" Type="uniqueidentifier" />
     <Property Name="Rating" Type="int" />
     <Property Name="EditedBy" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="ProblemRelationships">
+    <Key>
+      <PropertyRef Name="ProblemID" />
+      <PropertyRef Name="ParentID" />
+    </Key>
+    <Property Name="ProblemID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ParentID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="PUser">
     <Key>
@@ -53,6 +70,7 @@
     <Property Name="Created" Type="datetime2" />
     <Property Name="EmailVerified" Type="bit" />
     <Property Name="FailedPasswordCount" Type="int" />
+    <Property Name="Online" Type="bit" />
   </EntityType>
   <Association Name="FK__ChatComme__Probl__164452B1">
     <End Role="Problem" Type="PhotonFactoryModel.Store.Problem" Multiplicity="0..1" />
@@ -87,6 +105,30 @@
       </Principal>
       <Dependent Role="Problem">
         <PropertyRef Name="PUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProblemRe__Paren__1A14E395">
+    <End Role="Problem" Type="PhotonFactoryModel.Store.Problem" Multiplicity="1" />
+    <End Role="ProblemRelationships" Type="PhotonFactoryModel.Store.ProblemRelationships" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Problem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProblemRelationships">
+        <PropertyRef Name="ParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProblemRe__Probl__1920BF5C">
+    <End Role="Problem" Type="PhotonFactoryModel.Store.Problem" Multiplicity="1" />
+    <End Role="ProblemRelationships" Type="PhotonFactoryModel.Store.ProblemRelationships" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Problem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProblemRelationships">
+        <PropertyRef Name="ProblemID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

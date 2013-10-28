@@ -30,6 +30,7 @@ namespace WhatsYourProblemCSharp.Models
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<bool> EmailVerified { get; set; }
         public Nullable<int> FailedPasswordCount { get; set; }
+        public Nullable<bool> Online { get; set; }
     
         public virtual ICollection<ChatComment> ChatComments { get; set; }
         public virtual ICollection<Problem> Problems { get; set; }

@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+@using WhatsYourProblemCSharp.Models;
+@model List<string>
+@foreach (string firstName in Model)
+{
+    @String.Format("{0} ", firstName)
+}

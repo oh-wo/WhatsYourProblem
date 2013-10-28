@@ -5,7 +5,9 @@ using System.Web;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using WhatsYourProblemCSharp.Models;
+using WhatsYourProblemCSharp.Helpers;
 
 
 namespace WhatsYourProblemCSharp
@@ -94,5 +96,20 @@ namespace WhatsYourProblemCSharp
         {
             Clients.All.removeProblemFromView(problemid);
         }
+
+        public void aRelationshipHasBeenRemoved(Guid parentid, Guid childid)
+        {
+            Clients.All.removeRelationship(parentid, childid);
+        }
+        public void aRelationshipHasBeenCreated(Guid originalid, Guid newid,string relationship)
+        {
+            Problem problem = new Problem();
+            using (PhotonFactoryEntities db = new PhotonFactoryEntities())
+            {
+                problem = db.Problems.FirstOrDefault(p => p.ID == newid);
+            }
+            Clients.All.addRelationship(originalid, newid, relationship, problem.Title);
+        }
+        
     }
 }

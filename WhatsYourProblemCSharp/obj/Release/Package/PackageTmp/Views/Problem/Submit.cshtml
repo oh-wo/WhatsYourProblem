@@ -1,10 +1,14 @@
 ﻿@{
     Layout = null;
 }
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script>
     $(document).on('click', '.closeBox', function (e) {
         $(this).closest('.submitProblem-container').fadeOut(100);
         $('.submitProblem-cover').fadeOut(100);
+        $('#submitProblem-form input[name="relationship"]').val("");
+        $('#submitProblem-form input[name="relatedid"]').val("");
     });
     $(document).ready(function (e) {
         $container = $('.submitProblem-container');
@@ -16,40 +20,79 @@
     $('.newProblemText').bind('keyup', function (e) {
 
         if (e.which === 13) { // 13 is enter key
-
-            $('.submitProblem-form > submit').trigger('click');
+            if ($($('.submitProblem-container > input')[0]).attr('disabled') != 'disabled') {
+                //prevent multiple presses
+                $('.submitProblem-form > submit').trigger('click');
+            }
 
         }
 
     });
     function submitNewProblemForm() {
-        $('.submitProblem-container > input').attr('disabled', 'disabled');
-        var data = {
-            title: $('.newProblemText').val()
-        };
-        var dataToPost = JSON.stringify(data);
-        $.ajax({
-            type: "POST",
-            url: "/Problem/Create",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: dataToPost,
-            success: function (id) {
-                if (id!=null) {
-                    $('.closeBox').trigger('click');
-                    ClearSubmitNewProblemContainer();
-                    $('.submitProblem-container > input').removeAttr('disabled');
-                    problem.server.addProblem(id)
-                } else {
-                    alert('server error');
-                }
-            },
-            error: function (ex) {
-                //communication error
-                alert('communication error');
-            },
+        $('.submitProblem-container input').attr('disabled', 'disabled');
+        var relationship = $('input[name="relationship"]').val();
+        var relatedid = $('input[name="relatedid"]').val();
+        if (relatedid != "" && relationship != "") {
+            var data = {
+                problemid: $('.newProblemText').attr('problemid'),
+                title: $('.newProblemText').val(),
+                relatedid: relatedid,
+                relationship: relationship,
+            };
+            var dataToPost = JSON.stringify(data);
+            $.ajax({
+                type: "POST",
+                url: "/Problem/CreateRelated",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: dataToPost,
+                success: function (id) {
+                    if (id != null) {
+                        $('.closeBox').trigger('click');
+                        ClearSubmitNewProblemContainer();
+                        $('.submitProblem-container input').removeAttr('disabled');
+                        problem.server.addProblem(id);
+                        problem.server.aRelationshipHasBeenCreated(relatedid, id, relationship);
+                    } else {
+                        alert('server error');
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    alert('communication error');
+                },
 
-        });
+            });
+        } else {
+            var data = {
+                title: $('.newProblemText').val(),
+            };
+            var dataToPost = JSON.stringify(data);
+            $.ajax({
+                type: "POST",
+                url: "/Problem/Create",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: dataToPost,
+                success: function (id) {
+                    if (id != null) {
+                        $('.closeBox').trigger('click');
+                        ClearSubmitNewProblemContainer();
+                        $('.submitProblem-container > input').removeAttr('disabled');
+                        problem.server.addProblem(id)
+                    } else {
+                        alert('server error');
+                    }
+                },
+                error: function (ex) {
+                    //communication error
+                    alert('communication error');
+                },
+
+            });
+
+        }
+
     }
     $(document).ready(function () {
         $('#submitProblem-form').validate({
@@ -57,7 +100,7 @@
                 newProblemText: 'required',
             },
             messages: {
-                newProblemText: 'Please enter a problem',
+                newProblemText: 'x',
             },
             highlight: function (label) {
                 $(label).closest('.control-group').addClass('error');
@@ -73,7 +116,9 @@
     function ClearSubmitNewProblemContainer() {
         $('.newProblemText').val("")
     }
+
 </script>
+<script src="~/Scripts/prettify.js"></script>
 <style>
     .submitProblem-container {
         position: absolute;
@@ -117,11 +162,13 @@
         clear: both;
         margin-right: -10px;
     }
-    .submitProblem-cover{
-        position:absolute;
-        top:0;
-        left:0;
+
+    .submitProblem-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
+
     .error {
         float: left;
         margin-left: 10px;
@@ -141,15 +188,28 @@
         width: 150px;
         clear: left;
     }
+
+    .options {
+        float: left;
+    }
+
+        .options input, label {
+            float: left;
+            width: 46px;
+        }
 </style>
-<div class="submitProblem-cover" style="display:none;"></div>
-<div class="submitProblem-container" style="display:none;">
+<div class="submitProblem-cover" style="display: none;"></div>
+<div class="submitProblem-container" style="display: none;">
     <form id="submitProblem-form">
         <div class="helpText">enter a new problem title</div>
-        <div class="control-group">
-            <input type="text" class="newProblemText" name="newProblemText" tabindex="-1"/>
+        <div class="new">
+            <div class="control-group">
+                <input type="text" class="newProblemText" name="newProblemText" tabindex="-1" />
+            </div>
+            <input type="submit" value="submit" />
         </div>
-        <input type="submit" value="submit" />
+        <input type="hidden" name="relationship" value="" />
+        <input type="hidden" name="relatedid" value="" />
         <div class="closeBox">close</div>
     </form>
 </div>
