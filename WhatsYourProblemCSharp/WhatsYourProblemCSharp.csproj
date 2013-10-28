@@ -25,7 +25,7 @@
 
     <meta name="msapplication-TileImage" content="/windows-tile.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="selected-link" value="repo_source" data-pjax-transient />
+    <meta name="selected-link" value="repo_source" data-pjax-transient="" />
     <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="82D81E70:1FA5:12C12447:52671C0D" name="octolytics-dimension-request_id" /><meta content="4364081" name="octolytics-actor-id" /><meta content="oh-wo" name="octolytics-actor-login" /><meta content="17f4759807f839da7b907a204a662427a0db171d2ac4f23f01db122d14817b70" name="octolytics-actor-hash" />
     
 
