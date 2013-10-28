@@ -33,13 +33,19 @@
         $('.submitProblem-container input').attr('disabled', 'disabled');
 =======
         $('.submitProblem-container > input').attr('disabled', 'disabled');
+<<<<<<< HEAD
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
+=======
 >>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         var relationship = $('input[name="relationship"]').val();
         var relatedid = $('input[name="relatedid"]').val();
         if (relatedid != "" && relationship != "") {
             var data = {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 problemid: $('.newProblemText').attr('problemid'),
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
 =======
 >>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                 title: $('.newProblemText').val(),
@@ -58,9 +64,14 @@
                         $('.closeBox').trigger('click');
                         ClearSubmitNewProblemContainer();
 <<<<<<< HEAD
+<<<<<<< HEAD
                         $('.submitProblem-container input').removeAttr('disabled');
                         problem.server.addProblem(id);
                         problem.server.aRelationshipHasBeenCreated(relatedid, id, relationship);
+=======
+                        $('.submitProblem-container > input').removeAttr('disabled');
+                        problem.server.addProblem(id)
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                     } else {
                         alert('server error');
                     }
@@ -75,6 +86,7 @@
             var data = {
                 title: $('.newProblemText').val(),
             };
+<<<<<<< HEAD
             var dataToPost = JSON.stringify(data);
             $.ajax({
                 type: "POST",
@@ -111,6 +123,8 @@
             var data = {
                 title: $('.newProblemText').val(),
             };
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
                 var dataToPost = JSON.stringify(data);
             $.ajax({
                 type: "POST",
@@ -137,6 +151,9 @@
             
         }
        
+<<<<<<< HEAD
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
+=======
 >>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
     }
     $(document).ready(function () {
@@ -256,6 +273,9 @@
 <<<<<<< HEAD
 =======
         <input type="submit" value="submit" />
+<<<<<<< HEAD
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
+=======
 >>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         <input type="hidden" name="relationship" value="" />
         <input type="hidden" name="relatedid" value="" />

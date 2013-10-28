@@ -98,6 +98,7 @@ namespace WhatsYourProblemCSharp
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public void aRelationshipHasBeenRemoved(Guid parentid, Guid childid)
         {
             Clients.All.removeRelationship(parentid, childid);
@@ -111,6 +112,8 @@ namespace WhatsYourProblemCSharp
             }
             Clients.All.addRelationship(originalid, newid, relationship, problem.Title);
         }
+=======
+>>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
 =======
 >>>>>>> 17c5e93a2a76b87b85764032e52f423e32740d09
         
